@@ -1,5 +1,7 @@
 package com.example.demo.controller;
 
+import com.example.demo.exceptions.PersonAlreadyExists;
+import com.example.demo.exceptions.PersonNotExists;
 import com.example.demo.model.Person;
 import com.example.demo.projections.PersonQuantity;
 import com.example.demo.service.PersonService;
@@ -27,14 +29,13 @@ public class PersonController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<Person> addPerson(@RequestBody Person newPerson)
-    {
+    public ResponseEntity<Person> addPerson(@RequestBody Person newPerson) throws PersonAlreadyExists {
         personService.addPerson(newPerson);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @GetMapping("/")
-    public ResponseEntity<List<Person>> getAll(String dni)
+    public ResponseEntity<List<Person>> getAll(@RequestParam(required = false) String dni)
     {
         if(isNull(dni))
         {
@@ -43,8 +44,32 @@ public class PersonController {
         return ResponseEntity.ok(personService.getAll(dni));
     }
 
+    @DeleteMapping("/{dni}")
+    public ResponseEntity<Person> deletePerson(@RequestParam String dni) throws PersonNotExists
+    {
+        return ResponseEntity.ok(personService.deletePerson(dni));
+    }
+
+    @PutMapping("/hireEmployee/{dni}")
+    public ResponseEntity<Person> hireAsEmployee(@RequestParam String dni) throws PersonNotExists
+    {
+        return ResponseEntity.ok(personService.hireAsEmployee(dni));
+    }
+
+    @PutMapping("/hireVet/{dni}")
+    public ResponseEntity<Person> hireAsVet(@RequestParam String dni) throws PersonNotExists
+    {
+        return ResponseEntity.ok(personService.hireAsVet(dni));
+    }
+
+    @PutMapping("/firePerson/{dni}")
+    public ResponseEntity<Person> firePerson(@RequestParam String dni) throws PersonNotExists
+    {
+        return ResponseEntity.ok(personService.firePerson(dni));
+    }
+
     @GetMapping("/projection")
-    public ResponseEntity<List<PersonQuantity>> getPersonQuantity()
+    public ResponseEntity<PersonQuantity> getPersonQuantity()
     {
         return ResponseEntity.ok(personService.getPersonQuantity());
     }
