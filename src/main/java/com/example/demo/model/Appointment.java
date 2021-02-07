@@ -23,7 +23,7 @@ public class Appointment {
 
     private String description;
 
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JsonBackReference(value="appointment-person")
     @JoinColumn(name = "id_person")
     private Person person;
