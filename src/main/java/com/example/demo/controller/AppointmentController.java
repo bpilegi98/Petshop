@@ -5,12 +5,11 @@ import com.example.demo.model.Appointment;
 import com.example.demo.service.AppointmentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/appointment")
 public class AppointmentController {
 

@@ -8,16 +8,13 @@ import com.example.demo.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.net.URI;
 import java.util.List;
 
 import static java.util.Objects.isNull;
 
-@Controller
+@RestController
 @RequestMapping("/person")
 public class PersonController {
 
@@ -35,7 +32,7 @@ public class PersonController {
     }
 
     @GetMapping("/")
-    public ResponseEntity<List<Person>> getAll(@RequestParam(required = false) String dni)
+    public ResponseEntity<List<Person>> getAll(@PathVariable(required = false) String dni)
     {
         if(isNull(dni))
         {
@@ -45,25 +42,25 @@ public class PersonController {
     }
 
     @DeleteMapping("/{dni}")
-    public ResponseEntity<Person> deletePerson(@RequestParam String dni) throws PersonNotExists
+    public ResponseEntity<Person> deletePerson(@PathVariable String dni) throws PersonNotExists
     {
         return ResponseEntity.ok(personService.deletePerson(dni));
     }
 
     @PutMapping("/hireEmployee/{dni}")
-    public ResponseEntity<Person> hireAsEmployee(@RequestParam String dni) throws PersonNotExists
+    public ResponseEntity<Person> hireAsEmployee(@PathVariable String dni) throws PersonNotExists
     {
         return ResponseEntity.ok(personService.hireAsEmployee(dni));
     }
 
     @PutMapping("/hireVet/{dni}")
-    public ResponseEntity<Person> hireAsVet(@RequestParam String dni) throws PersonNotExists
+    public ResponseEntity<Person> hireAsVet(@PathVariable String dni) throws PersonNotExists
     {
         return ResponseEntity.ok(personService.hireAsVet(dni));
     }
 
     @PutMapping("/firePerson/{dni}")
-    public ResponseEntity<Person> firePerson(@RequestParam String dni) throws PersonNotExists
+    public ResponseEntity<Person> firePerson(@PathVariable String dni) throws PersonNotExists
     {
         return ResponseEntity.ok(personService.firePerson(dni));
     }

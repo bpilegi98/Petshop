@@ -7,12 +7,11 @@ import com.example.demo.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/product")
 public class ProductController {
 
@@ -39,7 +38,7 @@ public class ProductController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Product> deleteProduct(@RequestParam int id)
+    public ResponseEntity<Product> deleteProduct(@PathVariable int id)
     {
         return ResponseEntity.ok(productService.deleteProduct(id));
     }
@@ -51,7 +50,7 @@ public class ProductController {
     }
 
     @GetMapping("/stock/{id}")
-    public ResponseEntity<ProductStock> getProductStock(@RequestParam int id)
+    public ResponseEntity<ProductStock> getProductStock(@PathVariable int id)
     {
         return ResponseEntity.ok(productService.getProductStock(id));
     }
