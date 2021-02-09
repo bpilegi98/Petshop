@@ -26,4 +26,19 @@ public class AppointmentService {
     {
         appointmentRepository.save(newAppointment);
     }
+
+    public List<Appointment> getActiveAppointments()
+    {
+        return appointmentRepository.getActiveAppointments();
+    }
+
+    public List<Appointment> getCancelledAppointments()
+    {
+        return appointmentRepository.getCancelledAppointments();
+    }
+
+    public List<Appointment> getPostponedAppointments()
+    {
+        return appointmentRepository.getPostponedAppointments();
+    }
 }

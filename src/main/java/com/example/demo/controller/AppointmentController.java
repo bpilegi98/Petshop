@@ -32,4 +32,34 @@ public class AppointmentController {
     {
         return ResponseEntity.ok(appointmentService.getAll());
     }
+
+    @GetMapping("/active")
+    public ResponseEntity<List<Appointment>> getActiveAppointments()
+    {
+        List<Appointment> appointments = appointmentService.getActiveAppointments();
+        if ((appointments.isEmpty())) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        }
+        return ResponseEntity.ok(appointments);
+    }
+
+    @GetMapping("/cancelled")
+    public ResponseEntity<List<Appointment>> getCancelledAppointments()
+    {
+        List<Appointment> appointments = appointmentService.getCancelledAppointments();
+        if ((appointments.isEmpty())) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        }
+        return ResponseEntity.ok(appointments);
+    }
+
+    @GetMapping("/postponed")
+    public ResponseEntity<List<Appointment>> getPostponedAppointments()
+    {
+        List<Appointment> appointments = appointmentService.getPostponedAppointments();
+        if ((appointments.isEmpty())) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        }
+        return ResponseEntity.ok(appointments);
+    }
 }

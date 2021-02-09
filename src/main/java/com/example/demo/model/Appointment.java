@@ -1,6 +1,7 @@
 package com.example.demo.model;
 
 
+import com.example.demo.model.enums.AppointmentStatus;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
@@ -11,6 +12,7 @@ import java.util.Date;
 @NoArgsConstructor
 @Data
 @Entity
+@Table(name = "Appointments")
 public class Appointment {
 
     @Id
@@ -22,6 +24,9 @@ public class Appointment {
     private Date date;
 
     private String description;
+
+    @Enumerated(EnumType.STRING)
+    private AppointmentStatus status;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonBackReference(value="appointment-person")
