@@ -5,6 +5,7 @@ import com.example.demo.exceptions.PersonNotExists;
 import com.example.demo.model.Person;
 import com.example.demo.projections.PersonQuantity;
 import com.example.demo.service.PersonService;
+import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import static java.util.Objects.isNull;
 
 @RestController
 @RequestMapping("/person")
+@Log
 public class PersonController {
 
     private final PersonService personService;
@@ -26,9 +28,9 @@ public class PersonController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<Person> addPerson(@RequestBody Person newPerson) throws PersonAlreadyExists {
+    public ResponseEntity<String> addPerson(@RequestBody Person newPerson) throws PersonAlreadyExists {
         personService.addPerson(newPerson);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        return ResponseEntity.status(HttpStatus.CREATED).body("The person was created successfully");
     }
 
     @GetMapping("/")

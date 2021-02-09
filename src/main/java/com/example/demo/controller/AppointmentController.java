@@ -21,10 +21,10 @@ public class AppointmentController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<Appointment> addAppointment(@RequestBody Appointment newAppointment)
+    public ResponseEntity<String> addAppointment(@RequestBody Appointment newAppointment)
     {
         appointmentService.addAppointment(newAppointment);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        return ResponseEntity.status(HttpStatus.CREATED).body("The person was created successfully");
     }
 
     @GetMapping("/")

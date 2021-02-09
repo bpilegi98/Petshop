@@ -25,10 +25,10 @@ public class ProductController {
 
 
     @PostMapping("/")
-    public ResponseEntity<Product> addProduct(@RequestBody Product newProduct)
+    public ResponseEntity<String> addProduct(@RequestBody Product newProduct)
     {
         productService.addProduct(newProduct);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        return ResponseEntity.status(HttpStatus.CREATED).body("The product was created successfully");
     }
 
     @GetMapping("/")

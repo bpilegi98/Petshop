@@ -21,10 +21,10 @@ public class PetController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<Pet> addPet(@RequestBody Pet newPet)
+    public ResponseEntity<String> addPet(@RequestBody Pet newPet)
     {
         petService.addPet(newPet);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        return ResponseEntity.status(HttpStatus.CREATED).body("The pet was created successfully");
     }
 
     @GetMapping("/")
