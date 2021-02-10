@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 
+import com.example.demo.exceptions.AppointmentNotExists;
 import com.example.demo.model.Appointment;
 import com.example.demo.service.AppointmentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,21 @@ public class AppointmentController {
     public ResponseEntity<List<Appointment>> getAll()
     {
         return ResponseEntity.ok(appointmentService.getAll());
+    }
+
+    @PutMapping("/activate/{id}")
+    public ResponseEntity<Appointment> activateAppointment(@PathVariable int id) throws AppointmentNotExists {
+        return ResponseEntity.ok(appointmentService.activateAppointment(id));
+    }
+
+    @PutMapping("/cancel/{id}")
+    public ResponseEntity<Appointment> cancelAppointment(@PathVariable int id) throws AppointmentNotExists {
+        return ResponseEntity.ok(appointmentService.cancelAppointment(id));
+    }
+
+    @PutMapping("/postpone/{id}")
+    public ResponseEntity<Appointment> postponeAppointment(@PathVariable int id) throws AppointmentNotExists {
+        return ResponseEntity.ok(appointmentService.postponeAppointment(id));
     }
 
     @GetMapping("/active")
