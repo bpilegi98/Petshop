@@ -1,9 +1,9 @@
 package com.example.demo.repository;
 
 import com.example.demo.model.Person;
-import com.example.demo.model.enums.PersonType;
 import com.example.demo.projections.PersonQuantity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
@@ -18,12 +18,15 @@ public interface PersonRepository extends JpaRepository<Person, Integer> {
     @Query(value = "DELETE * FROM persons WHERE dni = ?1", nativeQuery = true)
     Person delete(String dni);
 
+    @Modifying(clearAutomatically = true)
     @Query(value = "UPDATE persons SET personType = 'EMPLOYEE' WHERE dni = ?1", nativeQuery = true)
     Person hireAsEmployee(String dni);
 
+    @Modifying(clearAutomatically = true)
     @Query(value = "UPDATE persons SET personType = 'VET' WHERE dni = ?1", nativeQuery = true)
     Person hirePersonAsVet(String dni);
 
+    @Modifying(clearAutomatically = true)
     @Query(value = "UPDATE persons SET personType = 'CUSTOMER' WHERE dni = ?1", nativeQuery = true)
     Person firePerson(String dni);
 
@@ -31,4 +34,6 @@ public interface PersonRepository extends JpaRepository<Person, Integer> {
             "INNER JOIN pets pt ON pr.id_person = pt.id_person " +
             "GROUP BY pr.id_person ", nativeQuery = true)
     PersonQuantity getPersonQuantity();
+
+    boolean existsByDni(String dni);
 }

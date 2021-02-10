@@ -1,5 +1,7 @@
 package com.example.demo.service;
 
+import com.example.demo.exceptions.ProductAlreadyExistsException;
+import com.example.demo.exceptions.ProductNotExistsException;
 import com.example.demo.model.Product;
 import com.example.demo.projections.ProductStock;
 import com.example.demo.repository.ProductRepository;
@@ -25,23 +27,38 @@ public class ProductService {
         return productRepository.findAll();
     }
 
-    public void addProduct(Product newProduct)
-    {
-        productRepository.save(newProduct);
+    public Product addProduct(Product newProduct) throws ProductAlreadyExistsException {
+        Product product = null;
+        if(!productRepository.existsByName(newProduct.getName()))
+        {
+            productRepository.save(newProduct);
+        }
+        return Optional.ofNullable(product).orElseThrow(() -> new ProductAlreadyExistsException("Couldn't create, that product already exists."));
     }
 
-    public Product deleteProduct(int id)
-    {
-        return Optional.ofNullable(productRepository.delete(id)).orElse(null);
+    public Product deleteProduct(int id) throws ProductNotExistsException {
+        Product product = null;
+        if (productRepository.existsById(id)) {
+            product = productRepository.delete(id);
+        }
+        return Optional.ofNullable(product).orElseThrow(() -> new ProductNotExistsException("Couldn't delete, that product doesn't exists"));
     }
 
-    public Product setProductStock(int id, int stock)
-    {
-       return productRepository.setProductStock(id, stock);
+    public Product setProductStock(int id, int stock) throws ProductNotExistsException {
+        Product product = null;
+        if(productRepository.existsById(id))
+        {
+           product = productRepository.setProductStock(id, stock);
+        }
+       return Optional.ofNullable(product).orElseThrow(() -> new ProductNotExistsException("Couldn't update stock, that product doesn't exists"));
     }
 
-    public ProductStock getProductStock(int id)
-    {
-        return productRepository.getProductStock(id);
+    public ProductStock getProductStock(int id) throws ProductNotExistsException {
+        ProductStock product = null;
+        if(productRepository.existsById(id))
+        {
+            product = productRepository.getProductStock(id);
+        }
+        return Optional.ofNullable(product).orElseThrow(() -> new ProductNotExistsException("Couldn't get stock, that product doesn't exists."));
     }
 }

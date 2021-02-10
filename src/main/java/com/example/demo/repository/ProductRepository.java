@@ -17,4 +17,6 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
 
     @Query(value = "SELECT p.name, p.stock FROM products WHERE id = ?1", nativeQuery = true)
     ProductStock getProductStock(int id);
+
+    boolean existsByName(String name);
 }

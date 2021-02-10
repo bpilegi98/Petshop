@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
-import com.example.demo.exceptions.PersonAlreadyExists;
-import com.example.demo.exceptions.PersonNotExists;
+import com.example.demo.exceptions.PersonAlreadyExistsException;
+import com.example.demo.exceptions.PersonNotExistsException;
 import com.example.demo.model.Person;
 import com.example.demo.projections.PersonQuantity;
 import com.example.demo.service.PersonService;
@@ -28,7 +28,7 @@ public class PersonController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<String> addPerson(@RequestBody Person newPerson) throws PersonAlreadyExists {
+    public ResponseEntity<String> addPerson(@RequestBody Person newPerson) throws PersonAlreadyExistsException {
         personService.addPerson(newPerson);
         return ResponseEntity.status(HttpStatus.CREATED).body("The person was created successfully");
     }
@@ -44,25 +44,25 @@ public class PersonController {
     }
 
     @DeleteMapping("/{dni}")
-    public ResponseEntity<Person> deletePerson(@PathVariable String dni) throws PersonNotExists
+    public ResponseEntity<Person> deletePerson(@PathVariable String dni) throws PersonNotExistsException
     {
         return ResponseEntity.ok(personService.deletePerson(dni));
     }
 
     @PutMapping("/hireEmployee/{dni}")
-    public ResponseEntity<Person> hireAsEmployee(@PathVariable String dni) throws PersonNotExists
+    public ResponseEntity<Person> hireAsEmployee(@PathVariable String dni) throws PersonNotExistsException
     {
         return ResponseEntity.ok(personService.hireAsEmployee(dni));
     }
 
     @PutMapping("/hireVet/{dni}")
-    public ResponseEntity<Person> hireAsVet(@PathVariable String dni) throws PersonNotExists
+    public ResponseEntity<Person> hireAsVet(@PathVariable String dni) throws PersonNotExistsException
     {
         return ResponseEntity.ok(personService.hireAsVet(dni));
     }
 
     @PutMapping("/firePerson/{dni}")
-    public ResponseEntity<Person> firePerson(@PathVariable String dni) throws PersonNotExists
+    public ResponseEntity<Person> firePerson(@PathVariable String dni) throws PersonNotExistsException
     {
         return ResponseEntity.ok(personService.firePerson(dni));
     }
