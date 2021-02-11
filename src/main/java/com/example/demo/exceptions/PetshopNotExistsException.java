@@ -4,13 +4,11 @@ import lombok.extern.java.Log;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ResponseStatus(HttpStatus.BAD_REQUEST)
-@Log
-public class ProductAlreadyExistsException extends Exception{
+@ResponseStatus(HttpStatus.NOT_FOUND)
+public class PetshopNotExistsException extends Exception{
 
-    public ProductAlreadyExistsException(String message)
+    public PetshopNotExistsException(String message)
     {
         super(message);
-        log.info(message);
     }
 }

@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
-import com.example.demo.exceptions.PersonAlreadyExistsException;
-import com.example.demo.exceptions.PersonNotExistsException;
+import com.example.demo.exceptions.PetshopAlreadyExistsException;
+import com.example.demo.exceptions.PetshopNotExistsException;
 import com.example.demo.model.Person;
 import com.example.demo.projections.PersonQuantity;
 import com.example.demo.service.PersonService;
@@ -28,9 +28,18 @@ public class PersonController {
     }
 
     @PostMapping("/")
-    public ResponseEntity<String> addPerson(@RequestBody Person newPerson) throws PersonAlreadyExistsException {
-        personService.addPerson(newPerson);
-        return ResponseEntity.status(HttpStatus.CREATED).body("The person was created successfully");
+    public ResponseEntity<String> addPerson(@RequestBody Person newPerson) throws PetshopAlreadyExistsException {
+        ResponseEntity responseEntity = null;
+        try
+        {
+            personService.addPerson(newPerson);
+            responseEntity = ResponseEntity.status(HttpStatus.CREATED).body("The person was created successfully");
+        }
+        catch (IllegalArgumentException e)
+        {
+            responseEntity = ResponseEntity.status(HttpStatus.BAD_REQUEST).body("You must include the dni number.");
+        }
+        return responseEntity;
     }
 
     @GetMapping("/")
@@ -44,27 +53,64 @@ public class PersonController {
     }
 
     @DeleteMapping("/{dni}")
-    public ResponseEntity<Person> deletePerson(@PathVariable String dni) throws PersonNotExistsException
+    public ResponseEntity<Person> deletePerson(@PathVariable String dni) throws PetshopNotExistsException
     {
-        return ResponseEntity.ok(personService.deletePerson(dni));
+        ResponseEntity responseEntity = null;
+        try {
+            personService.deletePerson(dni);
+            responseEntity = ResponseEntity.status(HttpStatus.OK).body("The person has been deleted successfully.");
+        }
+        catch (IllegalArgumentException e)
+        {
+            responseEntity = ResponseEntity.status(HttpStatus.BAD_REQUEST).body("You must include the dni number.");
+        }
+        return responseEntity;
     }
 
     @PutMapping("/hireEmployee/{dni}")
-    public ResponseEntity<Person> hireAsEmployee(@PathVariable String dni) throws PersonNotExistsException
+    public ResponseEntity<Person> hireAsEmployee(@PathVariable String dni) throws PetshopNotExistsException
     {
-        return ResponseEntity.ok(personService.hireAsEmployee(dni));
+        ResponseEntity responseEntity = null;
+        try {
+            personService.hireAsEmployee(dni);
+            responseEntity = ResponseEntity.status(HttpStatus.OK).body("The employee has been hired successfully.");
+        }
+        catch (IllegalArgumentException e)
+        {
+            responseEntity = ResponseEntity.status(HttpStatus.BAD_REQUEST).body("You must include the dni number.");
+        }
+        return responseEntity;
     }
 
     @PutMapping("/hireVet/{dni}")
-    public ResponseEntity<Person> hireAsVet(@PathVariable String dni) throws PersonNotExistsException
+    public ResponseEntity<Person> hireAsVet(@PathVariable String dni) throws PetshopNotExistsException
     {
-        return ResponseEntity.ok(personService.hireAsVet(dni));
+        ResponseEntity responseEntity = null;
+        try {
+            personService.hireAsVet(dni);
+            responseEntity = ResponseEntity.status(HttpStatus.OK).body("The vet has been hired successfully.");
+        }
+        catch (IllegalArgumentException e)
+        {
+            responseEntity = ResponseEntity.status(HttpStatus.BAD_REQUEST).body("You must include the dni number.");
+        }
+        return responseEntity;
     }
 
     @PutMapping("/firePerson/{dni}")
-    public ResponseEntity<Person> firePerson(@PathVariable String dni) throws PersonNotExistsException
+    public ResponseEntity<Person> firePerson(@PathVariable String dni) throws PetshopNotExistsException
     {
-        return ResponseEntity.ok(personService.firePerson(dni));
+        ResponseEntity responseEntity = null;
+        try
+        {
+            personService.firePerson(dni);
+            responseEntity = ResponseEntity.status(HttpStatus.OK).body("The person has been fired successfully.");
+        }
+        catch (IllegalArgumentException e)
+        {
+            responseEntity = ResponseEntity.status(HttpStatus.BAD_REQUEST).body("You must include the dni number.");
+        }
+        return responseEntity;
     }
 
     @GetMapping("/projection")

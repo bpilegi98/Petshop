@@ -1,7 +1,7 @@
 package com.example.demo.service;
 
-import com.example.demo.exceptions.PersonAlreadyExistsException;
-import com.example.demo.exceptions.PersonNotExistsException;
+import com.example.demo.exceptions.PetshopAlreadyExistsException;
+import com.example.demo.exceptions.PetshopNotExistsException;
 import com.example.demo.model.Person;
 import com.example.demo.projections.PersonQuantity;
 import com.example.demo.repository.PersonRepository;
@@ -32,51 +32,51 @@ public class PersonService {
         return personRepository.findByDni(dni);
     }
 
-    public Person addPerson(Person newPerson) throws PersonAlreadyExistsException
+    public Person addPerson(Person newPerson) throws PetshopAlreadyExistsException
     {
         Person person = null;
         if(!personRepository.existsByDni(newPerson.getDni()))
         {
             person = personRepository.save(newPerson);
         }
-        return Optional.ofNullable(person).orElseThrow(()-> new PersonAlreadyExistsException("The person you're trying to add already exists."));
+        return Optional.ofNullable(person).orElseThrow(()-> new PetshopAlreadyExistsException("The person you're trying to add already exists."));
     }
 
-    public Person deletePerson(String dni) throws PersonNotExistsException
+    public Person deletePerson(String dni) throws PetshopNotExistsException
     {
         Person person = null;
         if(personRepository.existsByDni(dni))
         {
             person = personRepository.delete(dni);
         }
-        return Optional.ofNullable(person).orElseThrow(()-> new PersonNotExistsException("Couldn't delete, that person doesn't exists."));
+        return Optional.ofNullable(person).orElseThrow(()-> new PetshopNotExistsException("Couldn't delete, that person doesn't exists."));
     }
 
-    public Person hireAsEmployee(String dni) throws PersonNotExistsException {
+    public Person hireAsEmployee(String dni) throws PetshopNotExistsException {
         Person person = null;
         if(personRepository.existsByDni(dni))
         {
             personRepository.hireAsEmployee(dni);
         }
-        return Optional.ofNullable(person).orElseThrow(()-> new PersonNotExistsException("Couldn't hire, that person doesn't exists."));
+        return Optional.ofNullable(person).orElseThrow(()-> new PetshopNotExistsException("Couldn't hire, that person doesn't exists."));
     }
 
-    public Person hireAsVet(String dni) throws PersonNotExistsException {
+    public Person hireAsVet(String dni) throws PetshopNotExistsException {
         Person person = null;
         if(personRepository.existsByDni(dni))
         {
             personRepository.hirePersonAsVet(dni);
         }
-        return Optional.ofNullable(person).orElseThrow(()-> new PersonNotExistsException("Couldn't hire, that person doesn't exists."));
+        return Optional.ofNullable(person).orElseThrow(()-> new PetshopNotExistsException("Couldn't hire, that person doesn't exists."));
     }
 
-    public Person firePerson(String dni) throws PersonNotExistsException {
+    public Person firePerson(String dni) throws PetshopNotExistsException {
         Person person = null;
         if(personRepository.existsByDni(dni))
         {
             personRepository.firePerson(dni);
         }
-        return Optional.ofNullable(person).orElseThrow(()-> new PersonNotExistsException("Couldn't fire, that person doesn't exists."));
+        return Optional.ofNullable(person).orElseThrow(()-> new PetshopNotExistsException("Couldn't fire, that person doesn't exists."));
     }
 
     public PersonQuantity getPersonQuantity()

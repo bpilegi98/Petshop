@@ -1,7 +1,7 @@
 package com.example.demo.controller;
 
 
-import com.example.demo.exceptions.AppointmentNotExists;
+import com.example.demo.exceptions.PetshopNotExistsException;
 import com.example.demo.model.Appointment;
 import com.example.demo.service.AppointmentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +24,17 @@ public class AppointmentController {
     @PostMapping("/")
     public ResponseEntity<String> addAppointment(@RequestBody Appointment newAppointment)
     {
-        appointmentService.addAppointment(newAppointment);
-        return ResponseEntity.status(HttpStatus.CREATED).body("The person was created successfully");
+        ResponseEntity responseEntity = null;
+        try
+        {
+            appointmentService.addAppointment(newAppointment);
+            responseEntity = ResponseEntity.status(HttpStatus.CREATED).body("The appointment was created successfully");
+        }
+        catch (IllegalArgumentException e)
+        {
+            responseEntity = ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Make sure all data is filled in.");
+        }
+        return responseEntity;
     }
 
     @GetMapping("/")
@@ -35,18 +44,45 @@ public class AppointmentController {
     }
 
     @PutMapping("/activate/{id}")
-    public ResponseEntity<Appointment> activateAppointment(@PathVariable int id) throws AppointmentNotExists {
-        return ResponseEntity.ok(appointmentService.activateAppointment(id));
+    public ResponseEntity<Appointment> activateAppointment(@PathVariable int id) throws PetshopNotExistsException {
+        ResponseEntity responseEntity = null;
+        try {
+            appointmentService.activateAppointment(id);
+            responseEntity = ResponseEntity.status(HttpStatus.OK).body("The appointment has been updated successfully.");
+        }
+        catch (IllegalArgumentException e)
+        {
+            responseEntity = ResponseEntity.status(HttpStatus.BAD_REQUEST).body("You must include the id.");
+        }
+        return responseEntity;
     }
 
     @PutMapping("/cancel/{id}")
-    public ResponseEntity<Appointment> cancelAppointment(@PathVariable int id) throws AppointmentNotExists {
-        return ResponseEntity.ok(appointmentService.cancelAppointment(id));
+    public ResponseEntity<Appointment> cancelAppointment(@PathVariable int id) throws PetshopNotExistsException {
+        ResponseEntity responseEntity = null;
+        try {
+            appointmentService.cancelAppointment(id);
+            responseEntity = ResponseEntity.status(HttpStatus.OK).body("The appointment has been updated successfully.");
+        }
+        catch (IllegalArgumentException e)
+        {
+            responseEntity = ResponseEntity.status(HttpStatus.BAD_REQUEST).body("You must include the id.");
+        }
+        return responseEntity;
     }
 
     @PutMapping("/postpone/{id}")
-    public ResponseEntity<Appointment> postponeAppointment(@PathVariable int id) throws AppointmentNotExists {
-        return ResponseEntity.ok(appointmentService.postponeAppointment(id));
+    public ResponseEntity<Appointment> postponeAppointment(@PathVariable int id) throws PetshopNotExistsException {
+        ResponseEntity responseEntity = null;
+        try {
+            appointmentService.postponeAppointment(id);
+            responseEntity = ResponseEntity.status(HttpStatus.OK).body("The appointment has been updated successfully.");
+        }
+        catch (IllegalArgumentException e)
+        {
+            responseEntity = ResponseEntity.status(HttpStatus.BAD_REQUEST).body("You must include the id.");
+        }
+        return responseEntity;
     }
 
     @GetMapping("/active")
