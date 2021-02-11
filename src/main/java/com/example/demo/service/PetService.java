@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import com.example.demo.model.Pet;
+import com.example.demo.projections.PetWithOwner;
 import com.example.demo.repository.PetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,5 +26,10 @@ public class PetService {
     public void addPet(Pet newPet)
     {
         petRepository.save(newPet);
+    }
+
+    public PetWithOwner getPetWithOwner(int id)
+    {
+        return petRepository.getPetWithOwner(id);
     }
 }

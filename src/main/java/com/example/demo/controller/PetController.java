@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.Pet;
+import com.example.demo.projections.PetWithOwner;
 import com.example.demo.service.PetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,5 +32,11 @@ public class PetController {
     public ResponseEntity<List<Pet>> getAll()
     {
         return ResponseEntity.ok(petService.getAll());
+    }
+
+    @GetMapping("/owner/{id}")
+    public ResponseEntity<PetWithOwner> getPetWithOwner(@PathVariable int id)
+    {
+        return ResponseEntity.ok(petService.getPetWithOwner(id));
     }
 }

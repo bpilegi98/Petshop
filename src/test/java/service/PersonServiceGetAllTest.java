@@ -39,7 +39,7 @@ public class PersonServiceGetAllTest {
     {
         when(personService.getAll(null)).thenReturn(personList);
         List<Person> personListResult = personService.getAll(null);
-        assertEquals(2, personList.size());
+        assertEquals(2, personListResult.size());
         verify(personRepository, times(1)).findAll();
     }
 }
