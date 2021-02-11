@@ -30,7 +30,7 @@ public class ProductService {
         Product product = null;
         if(!productRepository.existsByName(newProduct.getName()))
         {
-            productRepository.save(newProduct);
+            product = productRepository.save(newProduct);
         }
         return Optional.ofNullable(product).orElseThrow(() -> new PetshopAlreadyExistsException("Couldn't create, that product already exists."));
     }
