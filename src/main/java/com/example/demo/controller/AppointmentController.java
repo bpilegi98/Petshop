@@ -4,14 +4,17 @@ package com.example.demo.controller;
 import com.example.demo.exceptions.PetshopNotExistsException;
 import com.example.demo.model.Appointment;
 import com.example.demo.service.AppointmentService;
+import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.logging.Level;
 
 @RestController
 @RequestMapping("/appointment")
+@Log
 public class AppointmentController {
 
     private final AppointmentService appointmentService;
@@ -29,10 +32,12 @@ public class AppointmentController {
         {
             appointmentService.addAppointment(newAppointment);
             responseEntity = ResponseEntity.status(HttpStatus.CREATED).body("The appointment was created successfully");
+            log.log(Level.FINE, "Appointment added.");
         }
         catch (IllegalArgumentException e)
         {
             responseEntity = ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Make sure all data is filled in.");
+            log.log(Level.WARNING, "Couldn't add appointment.");
         }
         return responseEntity;
     }
@@ -49,10 +54,12 @@ public class AppointmentController {
         try {
             appointmentService.activateAppointment(id);
             responseEntity = ResponseEntity.status(HttpStatus.OK).body("The appointment has been updated successfully.");
+            log.log(Level.FINE, "Appointment updated.");
         }
         catch (IllegalArgumentException e)
         {
             responseEntity = ResponseEntity.status(HttpStatus.BAD_REQUEST).body("You must include the id.");
+            log.log(Level.WARNING, "Couldn't update appointment.");
         }
         return responseEntity;
     }
@@ -63,10 +70,12 @@ public class AppointmentController {
         try {
             appointmentService.cancelAppointment(id);
             responseEntity = ResponseEntity.status(HttpStatus.OK).body("The appointment has been updated successfully.");
+            log.log(Level.FINE, "Appointment updated.");
         }
         catch (IllegalArgumentException e)
         {
             responseEntity = ResponseEntity.status(HttpStatus.BAD_REQUEST).body("You must include the id.");
+            log.log(Level.WARNING, "Couldn't update appointment.");
         }
         return responseEntity;
     }
@@ -77,10 +86,12 @@ public class AppointmentController {
         try {
             appointmentService.postponeAppointment(id);
             responseEntity = ResponseEntity.status(HttpStatus.OK).body("The appointment has been updated successfully.");
+            log.log(Level.FINE, "Appointment updated.");
         }
         catch (IllegalArgumentException e)
         {
             responseEntity = ResponseEntity.status(HttpStatus.BAD_REQUEST).body("You must include the id.");
+            log.log(Level.WARNING, "Couldn't update appointment.");
         }
         return responseEntity;
     }

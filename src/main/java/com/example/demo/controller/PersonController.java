@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.logging.Level;
 
 import static java.util.Objects.isNull;
 
@@ -34,10 +35,12 @@ public class PersonController {
         {
             personService.addPerson(newPerson);
             responseEntity = ResponseEntity.status(HttpStatus.CREATED).body("The person was created successfully");
+            log.log(Level.FINE, "Person added.");
         }
         catch (IllegalArgumentException e)
         {
             responseEntity = ResponseEntity.status(HttpStatus.BAD_REQUEST).body("You must include the dni number.");
+            log.log(Level.WARNING, "Couldn't add person.");
         }
         return responseEntity;
     }
@@ -59,10 +62,12 @@ public class PersonController {
         try {
             personService.deletePerson(dni);
             responseEntity = ResponseEntity.status(HttpStatus.OK).body("The person has been deleted successfully.");
+            log.log(Level.FINE, "Person deleted.");
         }
         catch (IllegalArgumentException e)
         {
             responseEntity = ResponseEntity.status(HttpStatus.BAD_REQUEST).body("You must include the dni number.");
+            log.log(Level.WARNING, "Couldn't delete person.");
         }
         return responseEntity;
     }
@@ -74,10 +79,12 @@ public class PersonController {
         try {
             personService.hireAsEmployee(dni);
             responseEntity = ResponseEntity.status(HttpStatus.OK).body("The employee has been hired successfully.");
+            log.log(Level.FINE, "Person updated.");
         }
         catch (IllegalArgumentException e)
         {
             responseEntity = ResponseEntity.status(HttpStatus.BAD_REQUEST).body("You must include the dni number.");
+            log.log(Level.WARNING, "Couldn't update person.");
         }
         return responseEntity;
     }
@@ -89,10 +96,12 @@ public class PersonController {
         try {
             personService.hireAsVet(dni);
             responseEntity = ResponseEntity.status(HttpStatus.OK).body("The vet has been hired successfully.");
+            log.log(Level.FINE, "Person updated.");
         }
         catch (IllegalArgumentException e)
         {
             responseEntity = ResponseEntity.status(HttpStatus.BAD_REQUEST).body("You must include the dni number.");
+            log.log(Level.WARNING, "Couldn't update person.");
         }
         return responseEntity;
     }
@@ -105,10 +114,12 @@ public class PersonController {
         {
             personService.firePerson(dni);
             responseEntity = ResponseEntity.status(HttpStatus.OK).body("The person has been fired successfully.");
+            log.log(Level.FINE, "Person updated.");
         }
         catch (IllegalArgumentException e)
         {
             responseEntity = ResponseEntity.status(HttpStatus.BAD_REQUEST).body("You must include the dni number.");
+            log.log(Level.WARNING, "Couldn't update person.");
         }
         return responseEntity;
     }
