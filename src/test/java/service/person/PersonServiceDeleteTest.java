@@ -33,7 +33,7 @@ public class PersonServiceDeleteTest {
 
     @Disabled("Not exists exception is thrown")
     @Test
-    public void deletePersonOk() throws PetshopNotExistsException
+    public void deletePersonOkTest() throws PetshopNotExistsException
     {
         personService.deletePerson("444");
         verify(personRepository, times(1)).delete("444");

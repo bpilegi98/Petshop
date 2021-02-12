@@ -43,7 +43,7 @@ public class PersonServiceFirePersonTest {
     }
 
     @Test
-    public void firePersonNotExists()
+    public void firePersonNotExistsTest()
     {
         assertThrows(PetshopNotExistsException.class, () -> personService.firePerson("444"));
     }

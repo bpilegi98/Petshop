@@ -34,7 +34,7 @@ public class PersonServiceHireVetTest {
 
     @Disabled("mismo problema que con hire employee")
     @Test
-    public void hireVetOk() throws PetshopNotExistsException {
+    public void hireVetOkTest() throws PetshopNotExistsException {
         person = mock(Person.class);
         when(personRepository.hirePersonAsVet("444")).thenReturn(person);
         Person personResult = personService.hireAsVet("444");
@@ -43,7 +43,7 @@ public class PersonServiceHireVetTest {
     }
 
     @Test
-    public void hireVetNotExists()
+    public void hireVetNotExistsTest()
     {
         assertThrows(PetshopNotExistsException.class, () -> personService.hireAsVet("444"));
     }

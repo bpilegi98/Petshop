@@ -33,7 +33,7 @@ public class PersonServiceHireEmployeeTest {
 
     @Disabled("No se como hacer para correr el test y que no me tire la excepcion de que no encuentra la persona")
     @Test
-    public void hireEmployeeOk() throws PetshopNotExistsException {
+    public void hireEmployeeOkTest() throws PetshopNotExistsException {
         person = mock(Person.class);
         when(personRepository.hireAsEmployee("444")).thenReturn(person);
         Person personResult = personService.hireAsEmployee("444");
@@ -42,7 +42,7 @@ public class PersonServiceHireEmployeeTest {
     }
 
     @Test
-    public void hireEmployeeNotExists()
+    public void hireEmployeeNotExistsTest()
     {
         assertThrows(PetshopNotExistsException.class, () -> personService.hireAsEmployee("444"));
     }

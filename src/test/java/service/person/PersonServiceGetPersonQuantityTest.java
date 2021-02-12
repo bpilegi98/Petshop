@@ -42,5 +42,5 @@ public class PersonServiceGetPersonQuantityTest {
         verify(personRepository, times(1)).getPersonQuantity();
         assertEquals(personQuantity, personQuantityResult);
     }
-    
+
 }
