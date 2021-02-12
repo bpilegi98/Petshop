@@ -1,22 +1,15 @@
-package service;
+package service.person;
 
 
 import com.example.demo.exceptions.PetshopAlreadyExistsException;
 import com.example.demo.model.Person;
-import com.example.demo.model.enums.PersonType;
 import com.example.demo.repository.PersonRepository;
 import com.example.demo.service.PersonService;
-import lombok.SneakyThrows;
-import org.aspectj.lang.annotation.Before;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;

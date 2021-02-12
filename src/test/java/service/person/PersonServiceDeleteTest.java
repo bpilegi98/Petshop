@@ -1,4 +1,4 @@
-package service;
+package service.person;
 
 import com.example.demo.exceptions.PetshopNotExistsException;
 import com.example.demo.model.Person;
