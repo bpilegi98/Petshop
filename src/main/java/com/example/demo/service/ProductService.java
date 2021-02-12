@@ -11,6 +11,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+import static java.util.Objects.isNull;
+
 @Service
 public class ProductService {
 
@@ -21,9 +23,13 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    public List<Product> getAll()
+    public List<Product> getAll(String name)
     {
-        return productRepository.findAll();
+        if(isNull(name))
+        {
+            return productRepository.findAll();
+        }
+        return productRepository.findByName(name);
     }
 
     public Product addProduct(Product newProduct) throws PetshopAlreadyExistsException {

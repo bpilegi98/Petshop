@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.logging.Level;
 
+import static java.util.Objects.isNull;
+
 @RestController
 @RequestMapping("/product")
 @Log
@@ -47,9 +49,13 @@ public class ProductController {
     }
 
     @GetMapping("/")
-    public ResponseEntity<List<Product>> getAll()
+    public ResponseEntity<List<Product>> getAll(@RequestParam(required = false) String name)
     {
-        return ResponseEntity.ok(productService.getAll());
+        if(isNull(name))
+        {
+            return ResponseEntity.ok(productService.getAll(null));
+        }
+        return ResponseEntity.ok(productService.getAll(name));
     }
 
     @DeleteMapping("/{id}")
