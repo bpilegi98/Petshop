@@ -4,16 +4,13 @@ import com.example.demo.model.Person;
 import com.example.demo.repository.PersonRepository;
 import com.example.demo.service.PersonService;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
-import java.util.Collections;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
 
@@ -43,6 +40,8 @@ public class PersonServiceGetAllTest {
         assertEquals(personList, personListResult);
     }
 
+    //CABIAR Y HACER UN METODO DE GET BY DNI SOLO SEPARADO DEL GET ALL
+    /*
     @Disabled("Ver como pasar por parametro un dni que si coincida")
     @Test
     public void getByDniOkTest()
@@ -56,10 +55,13 @@ public class PersonServiceGetAllTest {
         assertEquals(person, personAux);
     }
 
-    @Disabled("Ligado al test de arriba")
-    @Test
-    public void getByDniNotExistsTest()
-    {
 
+    @Test
+    public void getByDniNotExistsTest() throws PetshopNotExistsException
+    {
+        personList = new ArrayList<>();
+        when(personRepository.findByDni("444")).thenReturn(personList);
+        assertThrows(PetshopNotExistsException.class, () -> personService.getAll("444"));
     }
+     */
 }

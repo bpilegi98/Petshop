@@ -7,7 +7,6 @@ import com.example.demo.model.enums.PersonType;
 import com.example.demo.repository.PersonRepository;
 import com.example.demo.service.PersonService;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -43,7 +42,6 @@ public class PersonServiceAddTest {
         assertEquals(person, personResult);
     }
 
-    //@Disabled("no puede return null porque genera un NPE")
     @Test
     public void addPersonAlredyExistsTest()
     {

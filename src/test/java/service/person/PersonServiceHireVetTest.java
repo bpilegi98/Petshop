@@ -13,9 +13,10 @@ import org.mockito.Mock;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.times;
 import static org.mockito.MockitoAnnotations.initMocks;
 
-public class PersonServiceHireEmployeeTest {
+public class PersonServiceHireVetTest {
 
     @Mock
     PersonRepository personRepository;
@@ -31,19 +32,19 @@ public class PersonServiceHireEmployeeTest {
         initMocks(this);
     }
 
-    @Disabled("No se como hacer para correr el test y que no me tire la excepcion de que no encuentra la persona")
+    @Disabled("mismo problema que con hire employee")
     @Test
-    public void hireEmployeeOk() throws PetshopNotExistsException {
+    public void hireVetOk() throws PetshopNotExistsException {
         person = mock(Person.class);
-        when(personRepository.hireAsEmployee("444")).thenReturn(person);
-        Person personResult = personService.hireAsEmployee("444");
-        verify(personRepository, times(1)).hireAsEmployee("444");
+        when(personRepository.hirePersonAsVet("444")).thenReturn(person);
+        Person personResult = personService.hireAsVet("444");
+        verify(personRepository, times(1)).hirePersonAsVet("444");
         assertEquals(person.getPersonType(), personResult.getPersonType());
     }
 
     @Test
-    public void hireEmployeeNotExists()
+    public void hireVetNotExists()
     {
-        assertThrows(PetshopNotExistsException.class, () -> personService.hireAsEmployee("444"));
+        assertThrows(PetshopNotExistsException.class, () -> personService.hireAsVet("444"));
     }
 }
