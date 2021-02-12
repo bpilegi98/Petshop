@@ -3,6 +3,7 @@ package service.person;
 
 import com.example.demo.exceptions.PetshopAlreadyExistsException;
 import com.example.demo.model.Person;
+import com.example.demo.model.enums.PersonType;
 import com.example.demo.repository.PersonRepository;
 import com.example.demo.service.PersonService;
 import org.junit.jupiter.api.BeforeEach;
@@ -11,8 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
 
@@ -43,11 +43,11 @@ public class PersonServiceAddTest {
         assertEquals(person, personResult);
     }
 
-    @Disabled("no puede return null porque genera un NPE")
+    //@Disabled("no puede return null porque genera un NPE")
     @Test
-    public void addPersonAlredyExistsTest() throws PetshopAlreadyExistsException
+    public void addPersonAlredyExistsTest()
     {
-        when(personRepository.save(person)).thenReturn(null);
+        person = new Person(1, "Maria", "Magdalena", "444", "2222", PersonType.CUSTOMER, null, null);
         assertThrows(PetshopAlreadyExistsException.class, () -> personService.addPerson(person));
     }
 }
