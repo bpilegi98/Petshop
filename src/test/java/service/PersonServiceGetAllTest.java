@@ -1,45 +1,65 @@
 package service;
 
 import com.example.demo.model.Person;
-import com.example.demo.model.enums.PersonType;
 import com.example.demo.repository.PersonRepository;
 import com.example.demo.service.PersonService;
-import org.aspectj.lang.annotation.Before;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
+import static org.mockito.MockitoAnnotations.initMocks;
 
 public class PersonServiceGetAllTest {
 
-    @Autowired
-    PersonService personService;
-
     @Mock
     PersonRepository personRepository;
+
+    @InjectMocks
+    PersonService personService;
+
     List<Person> personList;
 
-    @Before("")
+    @BeforeEach
     public void setUp()
     {
-        personService = new PersonService(personRepository);
-        Person person = new Person(1,"Bianca", "Pilegi", "11111111", "222222222", PersonType.CUSTOMER, null, null);
-        Person person2 = new Person(1,"Maria", "Magdalena", "11111121", "222252222", PersonType.EMPLOYEE, null, null);
-        personList.add(person);
-        personList.add(person2);
+        initMocks(this);
     }
 
     @Test
     public void getAllOkTest()
     {
-        when(personService.getAll(null)).thenReturn(personList);
+        personList = mock(List.class);
+        when(personRepository.findAll()).thenReturn(personList);
         List<Person> personListResult = personService.getAll(null);
-        assertEquals(2, personListResult.size());
         verify(personRepository, times(1)).findAll();
+        assertEquals(personList, personListResult);
+    }
+
+    @Disabled("Ver como pasar por parametro un dni que si coincida")
+    @Test
+    public void getByDniOkTest()
+    {
+        Person person = mock(Person.class);
+        when(personRepository.findByDni("444")).thenReturn(Collections.singletonList(person));
+        List<Person> personResult = personService.getAll("444");
+        Person personAux = personResult.get(0);
+        verify(personRepository, times(1)).findByDni("444");
+        assertNotNull(personResult);
+        assertEquals(person, personAux);
+    }
+
+    @Disabled("Ligado al test de arriba")
+    @Test
+    public void getByDniNotExistsTest()
+    {
+
     }
 }

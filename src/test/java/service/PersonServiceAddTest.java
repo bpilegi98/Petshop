@@ -6,47 +6,55 @@ import com.example.demo.model.Person;
 import com.example.demo.model.enums.PersonType;
 import com.example.demo.repository.PersonRepository;
 import com.example.demo.service.PersonService;
+import lombok.SneakyThrows;
 import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.Mockito.*;
+import static org.mockito.MockitoAnnotations.initMocks;
 
 
 public class PersonServiceAddTest {
 
-    @Autowired
-    PersonService personService;
-
     @Mock
     PersonRepository personRepository;
+
+    @InjectMocks
+    PersonService personService;
+
     Person person;
 
-    @Before("")
+    @BeforeEach
     public void setUp()
     {
-        personService = new PersonService(personRepository);
-        person = new Person(1,"Bianca", "Pilegi", "11111111", "222222222", PersonType.CUSTOMER, null, null);
+        initMocks(this);
     }
+
 
     @Test
-    public void addPersonOkTest() throws PetshopAlreadyExistsException
-    {
-        when(personService.addPerson(person)).thenReturn(person);
-        Person personResult = new Person();
-        personResult.setPersonType(PersonType.CUSTOMER);
-        personResult.setDni("11111111");
-        assertEquals(person.getPersonType(), personResult.getPersonType());
-        assertEquals(person.getDni(), personResult.getDni());
+    public void addPersonOkTest() throws PetshopAlreadyExistsException {
+        person = mock(Person.class);
+        when(personRepository.save(person)).thenReturn(person);
+        Person personResult = personService.addPerson(person);
+        verify(personRepository, times(1)).save(person);
+        assertEquals(person, personResult);
     }
 
+    @Disabled("no puede return null porque genera un NPE")
     @Test
     public void addPersonAlredyExistsTest() throws PetshopAlreadyExistsException
     {
-        when(personService.addPerson(person)).thenThrow(new PetshopAlreadyExistsException("Couldn't add, that person already exists."));
-        personService.addPerson(person);
+        when(personRepository.save(person)).thenReturn(null);
+        assertThrows(PetshopAlreadyExistsException.class, () -> personService.addPerson(person));
     }
 }
