@@ -21,6 +21,7 @@ public class Pet {
     @Column(name = "id_pet")
     private int id;
 
+    @NonNull
     private String name;
     private int age;
     private String breed;

@@ -1,9 +1,7 @@
 package com.example.demo.model;
 
 import com.example.demo.model.enums.PersonType;
-import com.sun.istack.NotNull;
 import lombok.*;
-
 import javax.persistence.*;
 import java.util.List;
 
@@ -21,7 +19,7 @@ public class Person {
 
     private String firstname;
     private String lastname;
-    @NotNull
+    @NonNull
     private String dni;
     private String telephone;
 

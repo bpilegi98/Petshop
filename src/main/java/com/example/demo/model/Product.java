@@ -1,6 +1,5 @@
 package com.example.demo.model;
 
-import com.sun.istack.NotNull;
 import lombok.*;
 
 import javax.persistence.*;
@@ -17,7 +16,7 @@ public class Product {
     @Column(name = "id_product")
     private int id;
 
-    @NotNull
+    @NonNull
     private String name;
     private float cost;
     private float price;
