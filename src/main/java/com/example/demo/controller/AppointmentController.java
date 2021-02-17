@@ -12,9 +12,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.logging.Level;
 
+import static java.util.Objects.isNull;
+
 @RestController
 @RequestMapping("/appointment")
-@Log
 public class AppointmentController {
 
     private final AppointmentService appointmentService;
@@ -27,19 +28,10 @@ public class AppointmentController {
     @PostMapping("/")
     public ResponseEntity<String> addAppointment(@RequestBody Appointment newAppointment)
     {
-        ResponseEntity responseEntity = null;
-        try
-        {
-            appointmentService.addAppointment(newAppointment);
-            responseEntity = ResponseEntity.status(HttpStatus.CREATED).body("The appointment was created successfully");
-            log.log(Level.FINE, "Appointment added.");
-        }
-        catch (IllegalArgumentException e)
-        {
-            responseEntity = ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Make sure all data is filled in.");
-            log.log(Level.WARNING, "Couldn't add appointment.");
-        }
-        return responseEntity;
+        Appointment appointment = appointmentService.addAppointment(newAppointment);
+        return (isNull(appointment)) ?
+                ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Couldn't add that appointment.") :
+                ResponseEntity.status(HttpStatus.CREATED).body("The appointment was created successfully");
     }
 
     @GetMapping("/")
@@ -49,51 +41,27 @@ public class AppointmentController {
     }
 
     @PutMapping("/activate/{id}")
-    public ResponseEntity<Appointment> activateAppointment(@PathVariable int id) throws PetshopNotExistsException {
-        ResponseEntity responseEntity = null;
-        try {
-            appointmentService.activateAppointment(id);
-            responseEntity = ResponseEntity.status(HttpStatus.OK).body("The appointment has been updated successfully.");
-            log.log(Level.FINE, "Appointment updated.");
-        }
-        catch (IllegalArgumentException e)
-        {
-            responseEntity = ResponseEntity.status(HttpStatus.BAD_REQUEST).body("You must include the id.");
-            log.log(Level.WARNING, "Couldn't update appointment.");
-        }
-        return responseEntity;
+    public ResponseEntity<String> activateAppointment(@PathVariable int id) throws PetshopNotExistsException {
+        Appointment appointment = appointmentService.activateAppointment(id);
+        return (isNull(appointment)) ?
+                ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Couldn't activate that appointment.") :
+                ResponseEntity.status(HttpStatus.OK).body("The appointment has been updated successfully.");
     }
 
     @PutMapping("/cancel/{id}")
-    public ResponseEntity<Appointment> cancelAppointment(@PathVariable int id) throws PetshopNotExistsException {
-        ResponseEntity responseEntity = null;
-        try {
-            appointmentService.cancelAppointment(id);
-            responseEntity = ResponseEntity.status(HttpStatus.OK).body("The appointment has been updated successfully.");
-            log.log(Level.FINE, "Appointment updated.");
-        }
-        catch (IllegalArgumentException e)
-        {
-            responseEntity = ResponseEntity.status(HttpStatus.BAD_REQUEST).body("You must include the id.");
-            log.log(Level.WARNING, "Couldn't update appointment.");
-        }
-        return responseEntity;
+    public ResponseEntity<String> cancelAppointment(@PathVariable int id) throws PetshopNotExistsException {
+        Appointment appointment = appointmentService.cancelAppointment(id);
+        return (isNull(appointment)) ?
+                ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Couldn't cancel that appointment.") :
+                ResponseEntity.status(HttpStatus.OK).body("The appointment has been updated successfully.");
     }
 
     @PutMapping("/postpone/{id}")
-    public ResponseEntity<Appointment> postponeAppointment(@PathVariable int id) throws PetshopNotExistsException {
-        ResponseEntity responseEntity = null;
-        try {
-            appointmentService.postponeAppointment(id);
-            responseEntity = ResponseEntity.status(HttpStatus.OK).body("The appointment has been updated successfully.");
-            log.log(Level.FINE, "Appointment updated.");
-        }
-        catch (IllegalArgumentException e)
-        {
-            responseEntity = ResponseEntity.status(HttpStatus.BAD_REQUEST).body("You must include the id.");
-            log.log(Level.WARNING, "Couldn't update appointment.");
-        }
-        return responseEntity;
+    public ResponseEntity<String> postponeAppointment(@PathVariable int id) throws PetshopNotExistsException {
+        Appointment appointment = appointmentService.postponeAppointment(id);
+        return isNull(appointment) ?
+                ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Couldn't postpone that appointment.") :
+                ResponseEntity.status(HttpStatus.OK).body("The appointment has been updated successfully.");
     }
 
     @GetMapping("/active")

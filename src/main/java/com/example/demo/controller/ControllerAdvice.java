@@ -2,7 +2,8 @@ package com.example.demo.controller;
 
 import com.example.demo.exceptions.PetshopAlreadyExistsException;
 import com.example.demo.exceptions.PetshopNotExistsException;
-import dto.ErrorDto;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.example.demo.dto.ErrorDto;
 import lombok.extern.java.Log;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -61,4 +62,20 @@ public class ControllerAdvice extends ResponseEntityExceptionHandler {
 
         return new ResponseEntity<ErrorDto>(error, HttpStatus.BAD_REQUEST);
     }
+
+    /*
+    @ExceptionHandler(JsonParseException.class)
+    public ResponseEntity<ErrorDto> handleJsonParseException(JsonParseException exception)
+    {
+        ErrorDto error = new ErrorDto(
+                HttpStatus.BAD_REQUEST.value(),
+                new Date(),
+                exception.getMessage()
+        );
+
+        log.log(Level.WARNING, "Make sure you're filling all the fields with correct information.");
+
+        return new ResponseEntity<ErrorDto>(error, HttpStatus.BAD_REQUEST);
+    }
+     */
 }

@@ -19,7 +19,6 @@ import static java.util.Objects.isNull;
 
 @RestController
 @RequestMapping("/product")
-@Log
 public class ProductController {
 
     private final ProductService productService;
@@ -33,19 +32,10 @@ public class ProductController {
 
     @PostMapping("/")
     public ResponseEntity<String> addProduct(@RequestBody Product newProduct) throws PetshopAlreadyExistsException {
-        ResponseEntity responseEntity = null;
-        try
-        {
-            productService.addProduct(newProduct);
-            responseEntity = ResponseEntity.status(HttpStatus.CREATED).body("The product was created successfully");
-            log.log(Level.FINE, "Product added.");
-        }
-        catch (IllegalArgumentException e)
-        {
-            responseEntity = ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Make sure all data is filled in.");
-            log.log(Level.WARNING, "Couldn't add product.");
-        }
-        return responseEntity;
+        Product product = productService.addProduct(newProduct);
+        return (isNull(product)) ?
+                ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Couldn't add that product.") :
+                ResponseEntity.status(HttpStatus.CREATED).body("The product was created successfully");
     }
 
     @GetMapping("/")
@@ -59,51 +49,23 @@ public class ProductController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Product> deleteProduct(@PathVariable int id) throws PetshopNotExistsException {
-        ResponseEntity responseEntity = null;
-        try {
-            productService.deleteProduct(id);
-            responseEntity = ResponseEntity.status(HttpStatus.OK).body("The product has been deleted successfully.");
-            log.log(Level.FINE, "Product deleted.");
-        }
-        catch (IllegalArgumentException e)
-        {
-            responseEntity = ResponseEntity.status(HttpStatus.BAD_REQUEST).body("You must include the id.");
-            log.log(Level.WARNING, "Couldn't delete product.");
-        }
-        return responseEntity;
+    public ResponseEntity<String> deleteProduct(@PathVariable int id) throws PetshopNotExistsException {
+        Product product = productService.deleteProduct(id);
+        return (isNull(product)) ?
+                ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Couldn't delete that product.") :
+                ResponseEntity.status(HttpStatus.OK).body("The product has been deleted successfully.");
     }
 
     @PutMapping("/stock/{id}{stock}")
-    public ResponseEntity<Product> setProductStock(@RequestParam int id, @RequestParam int stock) throws PetshopNotExistsException {
-        ResponseEntity responseEntity = null;
-        try
-        {
-            productService.setProductStock(id, stock);
-            responseEntity = ResponseEntity.status(HttpStatus.OK).body("The stock has been updated successfully.");
-            log.log(Level.FINE, "Product updated.");
-        }
-        catch (IllegalArgumentException e)
-        {
-            responseEntity = ResponseEntity.status(HttpStatus.BAD_REQUEST).body("You must include the id and stock.");
-            log.log(Level.WARNING, "Couldn't update product.");
-        }
-        return responseEntity;
+    public ResponseEntity<String> setProductStock(@RequestParam int id, @RequestParam int stock) throws PetshopNotExistsException {
+        Product product = productService.setProductStock(id, stock);
+        return (isNull(product)) ?
+                ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Couldn't update that product.") :
+                ResponseEntity.status(HttpStatus.OK).body("The stock has been updated successfully.");
     }
 
     @GetMapping("/stock/{id}")
     public ResponseEntity<ProductStock> getProductStock(@PathVariable int id) throws PetshopNotExistsException {
-        ResponseEntity responseEntity = null;
-        try
-        {
-            responseEntity = ResponseEntity.ok(productService.getProductStock(id));
-            log.log(Level.FINE, "Product listed.");
-        }
-        catch (IllegalArgumentException e)
-        {
-            responseEntity = ResponseEntity.status(HttpStatus.BAD_REQUEST).body("You must include the id.");
-            log.log(Level.WARNING, "Couldn't list product.");
-        }
-        return responseEntity;
+        return ResponseEntity.ok(productService.getProductStock(id));
     }
 }

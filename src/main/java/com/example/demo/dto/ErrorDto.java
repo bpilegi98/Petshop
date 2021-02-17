@@ -1,11 +1,9 @@
-package dto;
+package com.example.demo.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.extern.java.Log;
 
 import java.util.Date;
-import java.util.logging.Logger;
 
 @AllArgsConstructor
 @Data

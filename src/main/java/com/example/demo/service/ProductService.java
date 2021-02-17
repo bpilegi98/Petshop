@@ -32,7 +32,8 @@ public class ProductService {
         return productRepository.findByName(name);
     }
 
-    public Product addProduct(Product newProduct) throws PetshopAlreadyExistsException {
+    public Product addProduct(Product newProduct) throws PetshopAlreadyExistsException
+    {
         Product product = null;
         if(!productRepository.existsByName(newProduct.getName()))
         {

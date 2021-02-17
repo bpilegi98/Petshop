@@ -5,6 +5,7 @@ import com.example.demo.exceptions.PetshopNotExistsException;
 import com.example.demo.model.Person;
 import com.example.demo.projections.PersonQuantity;
 import com.example.demo.repository.PersonRepository;
+import com.fasterxml.jackson.core.JsonParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,6 +40,7 @@ public class PersonService {
         {
             person = personRepository.save(newPerson);
         }
+
         return Optional.ofNullable(person).orElseThrow(()-> new PetshopAlreadyExistsException("The person you're trying to add already exists."));
     }
 

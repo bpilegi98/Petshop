@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+import static java.util.Objects.isNull;
+
 @Service
 public class AppointmentService {
 
@@ -24,9 +26,11 @@ public class AppointmentService {
         return appointmentRepository.findAll();
     }
 
-    public void addAppointment(Appointment newAppointment)
+    public Appointment addAppointment(Appointment newAppointment)
     {
-        appointmentRepository.save(newAppointment);
+        Appointment appointment = null;
+        appointment = appointmentRepository.save(newAppointment);
+        return Optional.ofNullable(appointment).orElseThrow(() -> new IllegalArgumentException("Couldn't add that appointment."));
     }
 
     public Appointment activateAppointment(int id) throws PetshopNotExistsException {

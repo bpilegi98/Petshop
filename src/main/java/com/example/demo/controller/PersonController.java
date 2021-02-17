@@ -5,20 +5,17 @@ import com.example.demo.exceptions.PetshopNotExistsException;
 import com.example.demo.model.Person;
 import com.example.demo.projections.PersonQuantity;
 import com.example.demo.service.PersonService;
-import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.logging.Level;
 
 import static java.util.Objects.isNull;
 
 @RestController
 @RequestMapping("/person")
-@Log
 public class PersonController {
 
     private final PersonService personService;
@@ -30,98 +27,54 @@ public class PersonController {
 
     @PostMapping("/")
     public ResponseEntity<String> addPerson(@RequestBody Person newPerson) throws PetshopAlreadyExistsException {
-        ResponseEntity responseEntity = null;
-        try
-        {
-            personService.addPerson(newPerson);
-            responseEntity = ResponseEntity.status(HttpStatus.CREATED).body("The person was created successfully");
-            log.log(Level.FINE, "Person added.");
-        }
-        catch (IllegalArgumentException e)
-        {
-            responseEntity = ResponseEntity.status(HttpStatus.BAD_REQUEST).body("You must include the dni number.");
-            log.log(Level.WARNING, "Couldn't add person.");
-        }
-        return responseEntity;
+        Person person = personService.addPerson(newPerson);
+        return (isNull(person)) ?
+                ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Couldn't add that person.") :
+                ResponseEntity.status(HttpStatus.CREATED).body("The person was created successfully");
     }
 
     @GetMapping("/")
     public ResponseEntity<List<Person>> getAll(@PathVariable(required = false) String dni)
     {
-        if(isNull(dni))
-        {
-            return ResponseEntity.ok(personService.getAll(null));
-        }
-        return ResponseEntity.ok(personService.getAll(dni));
+        return (isNull(dni)) ?
+                ResponseEntity.ok(personService.getAll(null)) :
+                ResponseEntity.ok(personService.getAll(dni));
     }
 
     @DeleteMapping("/{dni}")
-    public ResponseEntity<Person> deletePerson(@PathVariable String dni) throws PetshopNotExistsException
+    public ResponseEntity<String> deletePerson(@PathVariable String dni) throws PetshopNotExistsException
     {
-        ResponseEntity responseEntity = null;
-        try {
-            personService.deletePerson(dni);
-            responseEntity = ResponseEntity.status(HttpStatus.OK).body("The person has been deleted successfully.");
-            log.log(Level.FINE, "Person deleted.");
-        }
-        catch (IllegalArgumentException e)
-        {
-            responseEntity = ResponseEntity.status(HttpStatus.BAD_REQUEST).body("You must include the dni number.");
-            log.log(Level.WARNING, "Couldn't delete person.");
-        }
-        return responseEntity;
+        Person person = personService.deletePerson(dni);
+        return (isNull(person)) ?
+                ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Couldn't delete that person.") :
+                ResponseEntity.status(HttpStatus.OK).body("The person has been deleted successfully.");
     }
 
     @PutMapping("/hireEmployee/{dni}")
-    public ResponseEntity<Person> hireAsEmployee(@PathVariable String dni) throws PetshopNotExistsException
+    public ResponseEntity<String> hireAsEmployee(@PathVariable String dni) throws PetshopNotExistsException
     {
-        ResponseEntity responseEntity = null;
-        try {
-            personService.hireAsEmployee(dni);
-            responseEntity = ResponseEntity.status(HttpStatus.OK).body("The employee has been hired successfully.");
-            log.log(Level.FINE, "Person updated.");
-        }
-        catch (IllegalArgumentException e)
-        {
-            responseEntity = ResponseEntity.status(HttpStatus.BAD_REQUEST).body("You must include the dni number.");
-            log.log(Level.WARNING, "Couldn't update person.");
-        }
-        return responseEntity;
+        Person person = personService.hireAsEmployee(dni);
+        return (isNull(person)) ?
+                ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Couldn't hire that person.") :
+                ResponseEntity.status(HttpStatus.OK).body("The employee has been hired successfully.");
     }
 
     @PutMapping("/hireVet/{dni}")
-    public ResponseEntity<Person> hireAsVet(@PathVariable String dni) throws PetshopNotExistsException
+    public ResponseEntity<String> hireAsVet(@PathVariable String dni) throws PetshopNotExistsException
     {
-        ResponseEntity responseEntity = null;
-        try {
-            personService.hireAsVet(dni);
-            responseEntity = ResponseEntity.status(HttpStatus.OK).body("The vet has been hired successfully.");
-            log.log(Level.FINE, "Person updated.");
-        }
-        catch (IllegalArgumentException e)
-        {
-            responseEntity = ResponseEntity.status(HttpStatus.BAD_REQUEST).body("You must include the dni number.");
-            log.log(Level.WARNING, "Couldn't update person.");
-        }
-        return responseEntity;
+        Person person = personService.hireAsVet(dni);
+        return (isNull(person)) ?
+                ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Couldn't hire that person.") :
+                ResponseEntity.status(HttpStatus.OK).body("The employee has been hired successfully.");
     }
 
     @PutMapping("/firePerson/{dni}")
-    public ResponseEntity<Person> firePerson(@PathVariable String dni) throws PetshopNotExistsException
+    public ResponseEntity<String> firePerson(@PathVariable String dni) throws PetshopNotExistsException
     {
-        ResponseEntity responseEntity = null;
-        try
-        {
-            personService.firePerson(dni);
-            responseEntity = ResponseEntity.status(HttpStatus.OK).body("The person has been fired successfully.");
-            log.log(Level.FINE, "Person updated.");
-        }
-        catch (IllegalArgumentException e)
-        {
-            responseEntity = ResponseEntity.status(HttpStatus.BAD_REQUEST).body("You must include the dni number.");
-            log.log(Level.WARNING, "Couldn't update person.");
-        }
-        return responseEntity;
+        Person person = personService.firePerson(dni);
+        return (isNull(person)) ?
+                ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Couldn't hire that person.") :
+                ResponseEntity.status(HttpStatus.OK).body("The employee has been hired successfully.");
     }
 
     @GetMapping("/projection")
