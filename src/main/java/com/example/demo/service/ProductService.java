@@ -55,11 +55,12 @@ public class ProductService {
         return Optional.ofNullable(product).orElseThrow(() -> new PetshopNotExistsException("Couldn't delete, that product doesn't exists"));
     }
 
-    public Product setProductStock(int id, int stock) throws PetshopNotExistsException {
-        Product product = null;
+    public Optional<Product> setProductStock(int id, int stock) throws PetshopNotExistsException {
+        Optional<Product> product = null;
         if(productRepository.existsById(id))
         {
-           product = productRepository.setProductStock(id, stock);
+            product = productRepository.findById(id);
+            productRepository.setProductStock(id, stock);
         }
        return Optional.ofNullable(product).orElseThrow(() -> new PetshopNotExistsException("Couldn't update stock, that product doesn't exists"));
     }

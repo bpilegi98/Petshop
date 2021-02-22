@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 import static java.util.Objects.isNull;
 
@@ -61,7 +62,7 @@ public class ProductController {
 
     @PutMapping("/stock/{id}{stock}")
     public ResponseEntity<String> setProductStock(@RequestParam int id, @RequestParam int stock) throws PetshopNotExistsException {
-        Product product = productService.setProductStock(id, stock);
+        Optional<Product> product = productService.setProductStock(id, stock);
         return (isNull(product)) ?
                 ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Couldn't update that product.") :
                 ResponseEntity.status(HttpStatus.OK).body("The stock has been updated successfully.");

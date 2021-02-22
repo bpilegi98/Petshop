@@ -15,7 +15,7 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     Product delete(int id);
 
     @Query(value = "UPDATE products SET stock = ?2 WHERE id = ?1", nativeQuery = true)
-    Product setProductStock(int id, int stock);
+    int setProductStock(int id, int stock);
 
     @Query(value = "SELECT p.name, p.stock FROM products WHERE id = ?1", nativeQuery = true)
     ProductStock getProductStock(int id);
