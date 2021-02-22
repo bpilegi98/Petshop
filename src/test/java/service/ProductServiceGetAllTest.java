@@ -41,6 +41,4 @@ public class ProductServiceGetAllTest {
         assertEquals(productList, productListResult);
     }
 
-
-    //Test getByNameNotExistsTest() y getByNameOkTest()
 }
