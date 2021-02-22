@@ -45,8 +45,8 @@ public class ProductController {
     }
 
     @GetMapping("/{name}")
-    public ResponseEntity<List<Product>> getByName(@PathVariable String name) throws PetshopNotExistsException {
-        return (productService.getByName(name).isEmpty()) ?
+    public ResponseEntity<Product> getByName(@PathVariable String name) throws PetshopNotExistsException {
+        return (isNull(productService.getByName(name))) ?
                 ResponseEntity.status(HttpStatus.NO_CONTENT).build() :
                 ResponseEntity.ok(productService.getByName(name));
     }

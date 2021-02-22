@@ -23,5 +23,5 @@ public interface ProductRepository extends JpaRepository<Product, Integer> {
     boolean existsByName(String name);
 
     @Query(value = "select * from products where name = ?1", nativeQuery = true)
-    List<Product> findByName(String name);
+    Product findByName(String name);
 }
