@@ -13,7 +13,7 @@ import java.util.List;
 public interface PersonRepository extends JpaRepository<Person, Integer> {
 
     @Query(value = "SELECT * FROM persons WHERE dni = ?1", nativeQuery = true)
-    List<Person> findByDni(String dni);
+    Person findByDni(String dni);
 
     @Query(value = "DELETE * FROM persons WHERE dni = ?1", nativeQuery = true)
     Person delete(String dni);

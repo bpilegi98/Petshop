@@ -34,11 +34,18 @@ public class PersonController {
     }
 
     @GetMapping("/")
-    public ResponseEntity<List<Person>> getAll(@PathVariable(required = false) String dni)
+    public ResponseEntity<List<Person>> getAll()
     {
-        return (isNull(dni)) ?
-                ResponseEntity.ok(personService.getAll(null)) :
-                ResponseEntity.ok(personService.getAll(dni));
+        return (personService.getAll().isEmpty()) ?
+                ResponseEntity.status(HttpStatus.NO_CONTENT).build() :
+                ResponseEntity.ok(personService.getAll());
+    }
+
+    @GetMapping("/{dni}")
+    public ResponseEntity<Person> getByDni(@PathVariable String dni) throws PetshopNotExistsException {
+        return (isNull(personService.getByDni(dni))) ?
+                ResponseEntity.status(HttpStatus.NOT_FOUND).build() :
+                ResponseEntity.ok(personService.getByDni(dni));
     }
 
     @DeleteMapping("/{dni}")

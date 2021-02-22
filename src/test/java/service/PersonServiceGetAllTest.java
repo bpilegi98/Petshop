@@ -36,7 +36,7 @@ public class PersonServiceGetAllTest {
     {
         personList = Collections.emptyList();
         when(personRepository.findAll()).thenReturn(personList);
-        List<Person> personListResult = personService.getAll(null);
+        List<Person> personListResult = personService.getAll();
         verify(personRepository, times(1)).findAll();
         assertEquals(personList, personListResult);
     }

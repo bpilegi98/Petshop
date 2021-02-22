@@ -23,13 +23,18 @@ public class PersonService {
         this.personRepository = personRepository;
     }
 
-    public List<Person> getAll(String dni)
+    public List<Person> getAll()
     {
-        if(isNull(dni))
-        {
             return personRepository.findAll();
+    }
+
+    public Person getByDni(String dni) throws PetshopNotExistsException {
+        Person person = null;
+        if(!isNull(dni))
+        {
+            person = personRepository.findByDni(dni);
         }
-        return personRepository.findByDni(dni);
+        return Optional.ofNullable(person).orElseThrow(() -> new PetshopNotExistsException("The person with the specified dni doesn't exists."));
     }
 
     public Person addPerson(Person newPerson) throws PetshopAlreadyExistsException
