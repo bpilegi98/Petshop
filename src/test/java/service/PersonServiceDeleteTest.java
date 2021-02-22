@@ -36,7 +36,12 @@ public class PersonServiceDeleteTest {
     @Test
     public void deletePersonOkTest() throws PetshopNotExistsException
     {
-        personService.deletePerson("444");
+        person = new Person(1, "Maria", "Magdalena", "444", "2222", null, null, null);
+        when(personRepository.existsByDni("444")).thenReturn(true);
+        when(personRepository.findByDni("444")).thenReturn(person);
+        when(personRepository.delete("444")).thenReturn(person);
+        Person personResult = personService.deletePerson("444");
+        assertEquals(person, personResult);
         verify(personRepository, times(1)).delete("444");
     }
 
