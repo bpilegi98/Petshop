@@ -41,28 +41,4 @@ public class PersonServiceGetAllTest {
         assertEquals(personList, personListResult);
     }
 
-    //CABIAR Y HACER UN METODO DE GET BY DNI SOLO SEPARADO DEL GET ALL
-    /*
-    @Disabled("Ver como pasar por parametro un dni que si coincida")
-    @Test
-    public void getByDniOkTest()
-    {
-        Person person = mock(Person.class);
-        when(personRepository.findByDni("444")).thenReturn(Collections.singletonList(person));
-        List<Person> personResult = personService.getAll("444");
-        Person personAux = personResult.get(0);
-        verify(personRepository, times(1)).findByDni("444");
-        assertNotNull(personResult);
-        assertEquals(person, personAux);
-    }
-
-
-    @Test
-    public void getByDniNotExistsTest() throws PetshopNotExistsException
-    {
-        personList = new ArrayList<>();
-        when(personRepository.findByDni("444")).thenReturn(personList);
-        assertThrows(PetshopNotExistsException.class, () -> personService.getAll("444"));
-    }
-     */
 }
