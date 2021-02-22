@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -33,7 +34,7 @@ public class PersonServiceGetAllTest {
     @Test
     public void getAllOkTest()
     {
-        personList = mock(List.class);
+        personList = Collections.emptyList();
         when(personRepository.findAll()).thenReturn(personList);
         List<Person> personListResult = personService.getAll(null);
         verify(personRepository, times(1)).findAll();

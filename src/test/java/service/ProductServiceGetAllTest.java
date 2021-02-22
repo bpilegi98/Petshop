@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -33,7 +34,7 @@ public class ProductServiceGetAllTest {
     @Test
     public void getAllOkTest()
     {
-        productList = mock(List.class);
+        productList = Collections.emptyList();
         when(productRepository.findAll()).thenReturn(productList);
         List<Product> productListResult = productService.getAll(null);
         verify(productRepository, times(1)).findAll();
