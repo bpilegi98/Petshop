@@ -12,6 +12,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
 
@@ -37,5 +38,11 @@ public class PersonServiceDeleteTest {
     {
         personService.deletePerson("444");
         verify(personRepository, times(1)).delete("444");
+    }
+
+    @Test
+    public void deleteNotExistsExceptionTest()
+    {
+        assertThrows(PetshopNotExistsException.class, () -> personService.deletePerson("444"));
     }
 }
