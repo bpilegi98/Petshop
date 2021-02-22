@@ -1,4 +1,4 @@
-package service.product;
+package service;
 
 import com.example.demo.model.Product;
 import com.example.demo.repository.ProductRepository;

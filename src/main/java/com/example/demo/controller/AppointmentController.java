@@ -4,13 +4,11 @@ package com.example.demo.controller;
 import com.example.demo.exceptions.PetshopNotExistsException;
 import com.example.demo.model.Appointment;
 import com.example.demo.service.AppointmentService;
-import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.logging.Level;
 
 import static java.util.Objects.isNull;
 

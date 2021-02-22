@@ -1,4 +1,4 @@
-package service.person;
+package service;
 
 import com.example.demo.model.Person;
 import com.example.demo.projections.PersonQuantity;

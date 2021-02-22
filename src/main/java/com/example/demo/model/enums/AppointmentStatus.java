@@ -5,15 +5,15 @@ public enum AppointmentStatus {
     CANCELLED("cancelled"),
     POSTPONED("postponed");
 
-    private final String appointmentStatus;
+    private final String string;
 
-    private AppointmentStatus(final String appointmentStatus)
+    private AppointmentStatus(final String string)
     {
-        this.appointmentStatus = appointmentStatus;
+        this.string = string;
     }
 
     public String getStatus()
     {
-        return appointmentStatus;
+        return string;
     }
 }

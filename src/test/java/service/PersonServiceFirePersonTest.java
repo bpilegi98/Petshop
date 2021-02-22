@@ -1,4 +1,4 @@
-package service.person;
+package service;
 
 import com.example.demo.exceptions.PetshopNotExistsException;
 import com.example.demo.model.Person;
@@ -16,7 +16,7 @@ import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.times;
 import static org.mockito.MockitoAnnotations.initMocks;
 
-public class PersonServiceHireVetTest {
+public class PersonServiceFirePersonTest {
 
     @Mock
     PersonRepository personRepository;
@@ -34,17 +34,17 @@ public class PersonServiceHireVetTest {
 
     @Disabled("mismo problema que con hire employee")
     @Test
-    public void hireVetOkTest() throws PetshopNotExistsException {
+    public void firePersonOk() throws PetshopNotExistsException {
         person = mock(Person.class);
-        when(personRepository.hirePersonAsVet("444")).thenReturn(person);
-        Person personResult = personService.hireAsVet("444");
-        verify(personRepository, times(1)).hirePersonAsVet("444");
+        when(personRepository.firePerson("444")).thenReturn(person);
+        Person personResult = personService.firePerson("444");
+        verify(personRepository, times(1)).firePerson("444");
         assertEquals(person.getPersonType(), personResult.getPersonType());
     }
 
     @Test
-    public void hireVetNotExistsTest()
+    public void firePersonNotExistsTest()
     {
-        assertThrows(PetshopNotExistsException.class, () -> personService.hireAsVet("444"));
+        assertThrows(PetshopNotExistsException.class, () -> personService.firePerson("444"));
     }
 }

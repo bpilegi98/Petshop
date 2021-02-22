@@ -6,14 +6,12 @@ import com.example.demo.exceptions.PetshopNotExistsException;
 import com.example.demo.model.Product;
 import com.example.demo.projections.ProductStock;
 import com.example.demo.service.ProductService;
-import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.logging.Level;
 
 import static java.util.Objects.isNull;
 
