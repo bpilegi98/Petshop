@@ -2,6 +2,7 @@ package service;
 
 import com.example.demo.exceptions.PetshopNotExistsException;
 import com.example.demo.model.Person;
+import com.example.demo.model.enums.PersonType;
 import com.example.demo.repository.PersonRepository;
 import com.example.demo.service.PersonService;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,14 +32,15 @@ public class PersonServiceHireEmployeeTest {
         initMocks(this);
     }
 
-    @Disabled("No se como hacer para correr el test y que no me tire la excepcion de que no encuentra la persona")
     @Test
     public void hireEmployeeOkTest() throws PetshopNotExistsException {
-        person = mock(Person.class);
-        when(personRepository.hireAsEmployee("444")).thenReturn(person);
-        Person personResult = personService.hireAsEmployee("444");
-        verify(personRepository, times(1)).hireAsEmployee("444");
-        assertEquals(person.getPersonType(), personResult.getPersonType());
+        person = new Person(1, "Maria", "Magdalena", "444", "2222", PersonType.CUSTOMER, null, null);
+        when(personRepository.hireAsEmployee(person.getDni())).thenReturn(1);
+        when(personRepository.existsByDni(person.getDni())).thenReturn(true);
+        when(personRepository.findByDni(person.getDni())).thenReturn(new Person(1,"Maria", "Magdalena", "444", "2222", PersonType.EMPLOYEE, null, null));
+        Person personResult = personService.hireAsEmployee(person.getDni());
+        verify(personRepository, times(1)).hireAsEmployee(person.getDni());
+        assertEquals(PersonType.EMPLOYEE, personResult.getPersonType());
     }
 
     @Test
