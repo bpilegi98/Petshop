@@ -23,13 +23,18 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
-    public List<Product> getAll(String name)
+    public List<Product> getAll()
     {
-        if(isNull(name))
-        {
             return productRepository.findAll();
+    }
+
+    public List<Product> getByName(String name) throws PetshopNotExistsException {
+        List<Product> productList = null;
+        if(!isNull(name))
+        {
+            productList = productRepository.findByName(name);
         }
-        return productRepository.findByName(name);
+        return Optional.ofNullable(productList).orElseThrow(() -> new PetshopNotExistsException("Couldn't find any product with that name."));
     }
 
     public Product addProduct(Product newProduct) throws PetshopAlreadyExistsException

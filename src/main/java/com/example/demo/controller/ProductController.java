@@ -37,13 +37,18 @@ public class ProductController {
     }
 
     @GetMapping("/")
-    public ResponseEntity<List<Product>> getAll(@RequestParam(required = false) String name)
+    public ResponseEntity<List<Product>> getAll()
     {
-        if(isNull(name))
-        {
-            return ResponseEntity.ok(productService.getAll(null));
-        }
-        return ResponseEntity.ok(productService.getAll(name));
+        return (productService.getAll().isEmpty()) ?
+                ResponseEntity.status(HttpStatus.NO_CONTENT).build() :
+                ResponseEntity.ok(productService.getAll());
+    }
+
+    @GetMapping("/{name}")
+    public ResponseEntity<List<Product>> getByName(@PathVariable String name) throws PetshopNotExistsException {
+        return (productService.getByName(name).isEmpty()) ?
+                ResponseEntity.status(HttpStatus.NO_CONTENT).build() :
+                ResponseEntity.ok(productService.getByName(name));
     }
 
     @DeleteMapping("/{id}")

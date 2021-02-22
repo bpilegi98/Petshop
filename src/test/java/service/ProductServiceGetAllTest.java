@@ -36,7 +36,7 @@ public class ProductServiceGetAllTest {
     {
         productList = Collections.emptyList();
         when(productRepository.findAll()).thenReturn(productList);
-        List<Product> productListResult = productService.getAll(null);
+        List<Product> productListResult = productService.getAll();
         verify(productRepository, times(1)).findAll();
         assertEquals(productList, productListResult);
     }
