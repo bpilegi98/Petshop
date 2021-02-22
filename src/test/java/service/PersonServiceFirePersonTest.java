@@ -2,6 +2,7 @@ package service;
 
 import com.example.demo.exceptions.PetshopNotExistsException;
 import com.example.demo.model.Person;
+import com.example.demo.model.enums.PersonType;
 import com.example.demo.repository.PersonRepository;
 import com.example.demo.service.PersonService;
 import org.junit.jupiter.api.BeforeEach;
@@ -32,14 +33,14 @@ public class PersonServiceFirePersonTest {
         initMocks(this);
     }
 
-    @Disabled("mismo problema que con hire employee")
     @Test
     public void firePersonOk() throws PetshopNotExistsException {
-        person = mock(Person.class);
-        when(personRepository.firePerson("444")).thenReturn(person);
-        Person personResult = personService.firePerson("444");
-        verify(personRepository, times(1)).firePerson("444");
-        assertEquals(person.getPersonType(), personResult.getPersonType());
+        person = new Person(1, "Maria", "Magdalena", "444", "2222", PersonType.VET, null, null);
+        when(personRepository.firePerson(person.getDni())).thenReturn(1);
+        when(personRepository.findByDni(person.getDni())).thenReturn(new Person(1,"Maria", "Magdalena", "444", "2222", PersonType.CUSTOMER, null, null));
+        Person personResult = personService.firePerson(person.getDni());
+        verify(personRepository, times(1)).firePerson(person.getDni());
+        assertEquals(PersonType.CUSTOMER, personResult.getPersonType());
     }
 
     @Test
