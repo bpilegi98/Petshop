@@ -10,7 +10,10 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
 
@@ -30,13 +33,20 @@ public class ProductServiceSetStockTest {
         initMocks(this);
     }
 
-    @Disabled("No funca, ver como resolver problema")
     @Test
     public void setStockOkTest() throws PetshopNotExistsException {
-        product = mock(Product.class);
-        when(productRepository.setProductStock(1, 30)).thenReturn(product);
-        Product productResult = productService.setProductStock(1, 30);
-        verify(productRepository, times(1)).setProductStock(1, 30);
-        assertEquals(product, productResult);
+        product = new Product(1, "Hueso", 100, 200, 20);
+        when(productRepository.setProductStock(1, 40)).thenReturn(1);
+        when(productRepository.existsById(1)).thenReturn(true);
+        when(productRepository.findById(1)).thenReturn(Optional.of(new Product(1, "Hueso", 100, 200, 40)));
+        Optional<Product> productResult = productService.setProductStock(1, 40);
+        assertEquals(40, productResult.get().getStock());
+        verify(productRepository, times(1)).setProductStock(1, 40);
+    }
+
+    @Test
+    public void setStockProductNotExistsExceptionTest()
+    {
+        assertThrows(PetshopNotExistsException.class, () -> productService.setProductStock(1, 40));
     }
 }
