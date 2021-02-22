@@ -20,15 +20,15 @@ public interface PersonRepository extends JpaRepository<Person, Integer> {
 
     @Modifying(clearAutomatically = true)
     @Query(value = "UPDATE persons SET personType = 'EMPLOYEE' WHERE dni = ?1", nativeQuery = true)
-    Person hireAsEmployee(String dni);
+    int hireAsEmployee(String dni);
 
     @Modifying(clearAutomatically = true)
     @Query(value = "UPDATE persons SET personType = 'VET' WHERE dni = ?1", nativeQuery = true)
-    Person hirePersonAsVet(String dni);
+    int hirePersonAsVet(String dni);
 
     @Modifying(clearAutomatically = true)
     @Query(value = "UPDATE persons SET personType = 'CUSTOMER' WHERE dni = ?1", nativeQuery = true)
-    Person firePerson(String dni);
+    int firePerson(String dni);
 
     @Query(value = "SELECT pr.firstname, pr.lastname, count(pt.id) as quantity FROM persons pr " +
             "INNER JOIN pets pt ON pr.id_person = pt.id_person " +

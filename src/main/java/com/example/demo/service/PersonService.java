@@ -62,6 +62,7 @@ public class PersonService {
         Person person = null;
         if(personRepository.existsByDni(dni))
         {
+            person = personRepository.findByDni(dni);
             personRepository.hireAsEmployee(dni);
         }
         return Optional.ofNullable(person).orElseThrow(()-> new PetshopNotExistsException("Couldn't hire, that person doesn't exists."));
@@ -71,6 +72,7 @@ public class PersonService {
         Person person = null;
         if(personRepository.existsByDni(dni))
         {
+            person = personRepository.findByDni(dni);
             personRepository.hirePersonAsVet(dni);
         }
         return Optional.ofNullable(person).orElseThrow(()-> new PetshopNotExistsException("Couldn't hire, that person doesn't exists."));
@@ -78,8 +80,9 @@ public class PersonService {
 
     public Person firePerson(String dni) throws PetshopNotExistsException {
         Person person = null;
-        if(personRepository.existsByDni(dni))
+        if(!isNull(personRepository.findByDni(dni)))
         {
+            person = personRepository.findByDni(dni);
             personRepository.firePerson(dni);
         }
         return Optional.ofNullable(person).orElseThrow(()-> new PetshopNotExistsException("Couldn't fire, that person doesn't exists."));
