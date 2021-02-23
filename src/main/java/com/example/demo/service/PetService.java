@@ -36,13 +36,17 @@ public class PetService {
         return Optional.ofNullable(pet).orElseThrow(() -> new PetshopNotExistsException("Couldn't find a pet with that id."));
     }
 
-    public void addPet(Pet newPet)
+    public Pet addPet(Pet newPet)
     {
-        petRepository.save(newPet);
+        return petRepository.save(newPet);
     }
 
-    public PetWithOwner getPetWithOwner(int id)
-    {
-        return petRepository.getPetWithOwner(id);
+    public PetWithOwner getPetWithOwner(int id) throws PetshopNotExistsException {
+        PetWithOwner pwo = null;
+        if(!isNull(this.getById(id)))
+        {
+             pwo = petRepository.getPetWithOwner(id);
+        }
+        return Optional.ofNullable(pwo).orElseThrow(() -> new PetshopNotExistsException("Couldn't find any pet with that id."));
     }
 }

@@ -46,8 +46,9 @@ public class PetController {
     }
 
     @GetMapping("/owner/{id}")
-    public ResponseEntity<PetWithOwner> getPetWithOwner(@PathVariable int id)
-    {
-        return ResponseEntity.ok(petService.getPetWithOwner(id));
+    public ResponseEntity<PetWithOwner> getPetWithOwner(@PathVariable int id) throws PetshopNotExistsException {
+        return (isNull(petService.getPetWithOwner(id))) ?
+                ResponseEntity.status(HttpStatus.BAD_REQUEST).build() :
+                ResponseEntity.ok(petService.getPetWithOwner(id));
     }
 }
