@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+import static java.util.Objects.isNull;
+
 @Service
 public class AppointmentService {
 
@@ -24,9 +26,13 @@ public class AppointmentService {
         return appointmentRepository.findAll();
     }
 
-    public Optional<Appointment> getById(int id)
-    {
-        return appointmentRepository.findById(id);
+    public Optional<Appointment> getById(int id) throws PetshopNotExistsException {
+        Optional<Appointment> appointment = null;
+        if(!isNull(id))
+        {
+            appointment = appointmentRepository.findById(id);
+        }
+        return Optional.ofNullable(appointment).orElseThrow(() -> new PetshopNotExistsException("Couldn't find any appointment with that id."));
     }
 
     public Appointment addAppointment(Appointment newAppointment)

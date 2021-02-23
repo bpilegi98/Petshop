@@ -40,8 +40,7 @@ public class AppointmentController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<Appointment>> getById(@PathVariable int id)
-    {
+    public ResponseEntity<Optional<Appointment>> getById(@PathVariable int id) throws PetshopNotExistsException {
         return (isNull(appointmentService.getById(id))) ?
                 ResponseEntity.status(HttpStatus.BAD_REQUEST).build() :
                 ResponseEntity.ok(appointmentService.getById(id));
