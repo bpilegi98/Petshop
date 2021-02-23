@@ -1,19 +1,20 @@
-package service;
+package com.example.demo.service;
 
 import com.example.demo.model.Pet;
-import com.example.demo.model.enums.PetType;
 import com.example.demo.repository.PetRepository;
-import com.example.demo.service.PetService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
+import java.util.Collections;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
 
-public class PetServiceAddTest {
+public class PetServiceGetAllTest {
 
     @Mock
     PetRepository petRepository;
@@ -21,7 +22,7 @@ public class PetServiceAddTest {
     @InjectMocks
     PetService petService;
 
-    Pet pet;
+    List<Pet> petList;
 
     @BeforeEach
     public void setUp()
@@ -30,12 +31,12 @@ public class PetServiceAddTest {
     }
 
     @Test
-    public void addPetOkTest()
+    public void getAllOkTest()
     {
-        pet = new Pet(1, "Rocco", 2, "Labrador", 45, PetType.DOG, null, null);
-        when(petRepository.save(pet)).thenReturn(pet);
-        Pet petResult = petService.addPet(pet);
-        assertEquals(pet, petResult);
-        verify(petRepository, times(1)).save(pet);
+        petList = Collections.emptyList();
+        when(petRepository.findAll()).thenReturn(petList);
+        List<Pet> listResult = petService.getAll();
+        assertEquals(petList, listResult);
+        verify(petRepository, times(1)).findAll();
     }
 }

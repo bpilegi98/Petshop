@@ -1,8 +1,7 @@
-package service;
+package com.example.demo.service;
 
 import com.example.demo.model.Appointment;
 import com.example.demo.repository.AppointmentRepository;
-import com.example.demo.service.AppointmentService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -15,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
 
-public class AppointmentServiceGetAllTest {
+public class AppointmentServiceGetActiveTest {
 
     @Mock
     AppointmentRepository appointmentRepository;
@@ -32,12 +31,12 @@ public class AppointmentServiceGetAllTest {
     }
 
     @Test
-    public void getAllOkTest()
+    public void getActiveAppointmentsOkTest()
     {
         appointmentList = Collections.emptyList();
-        when(appointmentRepository.findAll()).thenReturn(appointmentList);
-        List<Appointment> listResult = appointmentService.getAll();
+        when(appointmentRepository.getActiveAppointments()).thenReturn(appointmentList);
+        List<Appointment> listResult = appointmentService.getActiveAppointments();
         assertEquals(appointmentList, listResult);
-        verify(appointmentRepository, times(1)).findAll();
+        verify(appointmentRepository, times(1)).getActiveAppointments();
     }
 }

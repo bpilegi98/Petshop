@@ -1,8 +1,7 @@
-package service;
+package com.example.demo.service;
 
 import com.example.demo.model.Appointment;
 import com.example.demo.repository.AppointmentRepository;
-import com.example.demo.service.AppointmentService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

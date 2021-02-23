@@ -1,10 +1,8 @@
-package service;
+package com.example.demo.service;
 
 import com.example.demo.exceptions.PetshopNotExistsException;
 import com.example.demo.model.Person;
-import com.example.demo.model.enums.PersonType;
 import com.example.demo.repository.PersonRepository;
-import com.example.demo.service.PersonService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;

@@ -1,9 +1,8 @@
-package service;
+package com.example.demo.service;
 
 import com.example.demo.exceptions.PetshopNotExistsException;
 import com.example.demo.projections.PetWithOwner;
 import com.example.demo.repository.PetRepository;
-import com.example.demo.service.PetService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;

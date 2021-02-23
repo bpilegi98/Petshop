@@ -1,9 +1,8 @@
-package service;
+package com.example.demo.service;
 
 import com.example.demo.exceptions.PetshopNotExistsException;
 import com.example.demo.model.Product;
 import com.example.demo.repository.ProductRepository;
-import com.example.demo.service.ProductService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -16,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
 
-public class ProductServiceDeleteTest {
+public class ProductServiceSetStockTest {
 
     @Mock
     ProductRepository productRepository;
@@ -33,19 +32,19 @@ public class ProductServiceDeleteTest {
     }
 
     @Test
-    public void deleteProductOkTest() throws PetshopNotExistsException {
+    public void setStockOkTest() throws PetshopNotExistsException {
         product = new Product(1, "Hueso", 100, 200, 20);
+        when(productRepository.setProductStock(1, 40)).thenReturn(1);
         when(productRepository.existsById(1)).thenReturn(true);
-        when(productRepository.findById(1)).thenReturn(Optional.ofNullable(product));
-        when(productRepository.delete(1)).thenReturn(product);
-        Product productResult = productService.deleteProduct(1);
-        assertEquals(product, productResult);
-        verify(productRepository, times(1)).delete(1);
+        when(productRepository.findById(1)).thenReturn(Optional.of(new Product(1, "Hueso", 100, 200, 40)));
+        Optional<Product> productResult = productService.setProductStock(1, 40);
+        assertEquals(40, productResult.get().getStock());
+        verify(productRepository, times(1)).setProductStock(1, 40);
     }
 
     @Test
-    public void deleteProductNotExistsExceptionTest()
+    public void setStockProductNotExistsExceptionTest()
     {
-        assertThrows(PetshopNotExistsException.class, () -> productService.deleteProduct(1));
+        assertThrows(PetshopNotExistsException.class, () -> productService.setProductStock(1, 40));
     }
 }
