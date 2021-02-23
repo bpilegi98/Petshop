@@ -43,7 +43,7 @@ public class PetService {
 
     public PetWithOwner getPetWithOwner(int id) throws PetshopNotExistsException {
         PetWithOwner pwo = null;
-        if(!isNull(this.getById(id)))
+        if(petRepository.existsById(id))
         {
              pwo = petRepository.getPetWithOwner(id);
         }
