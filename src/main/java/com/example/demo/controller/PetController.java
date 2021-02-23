@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.exceptions.PetshopNotExistsException;
 import com.example.demo.model.Pet;
 import com.example.demo.projections.PetWithOwner;
 import com.example.demo.service.PetService;
@@ -9,6 +10,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
+
+import static java.util.Objects.isNull;
 
 @RestController
 @RequestMapping("/pet")
@@ -32,6 +36,13 @@ public class PetController {
     public ResponseEntity<List<Pet>> getAll()
     {
         return ResponseEntity.ok(petService.getAll());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Optional<Pet>> getById(@PathVariable int id) throws PetshopNotExistsException {
+        return (isNull(petService.getById(id))) ?
+                ResponseEntity.status(HttpStatus.BAD_REQUEST).build() :
+                ResponseEntity.ok(petService.getById(id));
     }
 
     @GetMapping("/owner/{id}")
