@@ -9,8 +9,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-import static java.util.Objects.isNull;
-
 @Service
 public class AppointmentService {
 
@@ -26,6 +24,11 @@ public class AppointmentService {
         return appointmentRepository.findAll();
     }
 
+    public Optional<Appointment> getById(int id)
+    {
+        return appointmentRepository.findById(id);
+    }
+
     public Appointment addAppointment(Appointment newAppointment)
     {
         Appointment appointment = null;
@@ -33,29 +36,32 @@ public class AppointmentService {
         return Optional.ofNullable(appointment).orElseThrow(() -> new IllegalArgumentException("Couldn't add that appointment."));
     }
 
-    public Appointment activateAppointment(int id) throws PetshopNotExistsException {
-        Appointment appointment = null;
+    public Optional<Appointment> activateAppointment(int id) throws PetshopNotExistsException {
+        Optional<Appointment> appointment = null;
         if(appointmentRepository.existsById(id))
         {
-            appointment = appointmentRepository.activateAppointment(id);
+            appointment = appointmentRepository.findById(id);
+            appointmentRepository.activateAppointment(id);
         }
         return Optional.ofNullable(appointment).orElseThrow(() -> new PetshopNotExistsException("Couldn't activate, that appointment doesn't exists."));
     }
 
-    public Appointment cancelAppointment(int id) throws PetshopNotExistsException {
-        Appointment appointment = null;
+    public Optional<Appointment> cancelAppointment(int id) throws PetshopNotExistsException {
+        Optional<Appointment> appointment = null;
         if(appointmentRepository.existsById(id))
         {
-            appointment = appointmentRepository.cancelAppointment(id);
+            appointment = appointmentRepository.findById(id);
+            appointmentRepository.cancelAppointment(id);
         }
         return Optional.ofNullable(appointment).orElseThrow(() -> new PetshopNotExistsException("Couldn't cancel, that appointment doesn't exists."));
     }
 
-    public Appointment postponeAppointment(int id) throws PetshopNotExistsException {
-        Appointment appointment = null;
+    public Optional<Appointment> postponeAppointment(int id) throws PetshopNotExistsException {
+        Optional<Appointment> appointment = null;
         if(appointmentRepository.existsById(id))
         {
-            appointment = appointmentRepository.postponeAppointment(id);
+            appointment = appointmentRepository.findById(id);
+            appointmentRepository.postponeAppointment(id);
         }
         return Optional.ofNullable(appointment).orElseThrow(() -> new PetshopNotExistsException("Couldn't postpone, that appointment doesn't exists."));
     }

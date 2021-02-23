@@ -9,6 +9,7 @@ import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 import static java.util.Objects.isNull;
 
@@ -38,9 +39,17 @@ public class AppointmentController {
         return ResponseEntity.ok(appointmentService.getAll());
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<Optional<Appointment>> getById(@PathVariable int id)
+    {
+        return (isNull(appointmentService.getById(id))) ?
+                ResponseEntity.status(HttpStatus.BAD_REQUEST).build() :
+                ResponseEntity.ok(appointmentService.getById(id));
+    }
+
     @PutMapping("/activate/{id}")
     public ResponseEntity<String> activateAppointment(@PathVariable int id) throws PetshopNotExistsException {
-        Appointment appointment = appointmentService.activateAppointment(id);
+        Optional<Appointment> appointment = appointmentService.activateAppointment(id);
         return (isNull(appointment)) ?
                 ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Couldn't activate that appointment.") :
                 ResponseEntity.status(HttpStatus.OK).body("The appointment has been updated successfully.");
@@ -48,7 +57,7 @@ public class AppointmentController {
 
     @PutMapping("/cancel/{id}")
     public ResponseEntity<String> cancelAppointment(@PathVariable int id) throws PetshopNotExistsException {
-        Appointment appointment = appointmentService.cancelAppointment(id);
+        Optional<Appointment> appointment = appointmentService.cancelAppointment(id);
         return (isNull(appointment)) ?
                 ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Couldn't cancel that appointment.") :
                 ResponseEntity.status(HttpStatus.OK).body("The appointment has been updated successfully.");
@@ -56,7 +65,7 @@ public class AppointmentController {
 
     @PutMapping("/postpone/{id}")
     public ResponseEntity<String> postponeAppointment(@PathVariable int id) throws PetshopNotExistsException {
-        Appointment appointment = appointmentService.postponeAppointment(id);
+        Optional<Appointment> appointment = appointmentService.postponeAppointment(id);
         return isNull(appointment) ?
                 ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Couldn't postpone that appointment.") :
                 ResponseEntity.status(HttpStatus.OK).body("The appointment has been updated successfully.");
