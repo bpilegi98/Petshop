@@ -30,7 +30,7 @@ public class PersonServiceDeleteTest {
         initMocks(this);
     }
 
-    @Disabled("Not exists exception is thrown")
+
     @Test
     public void deletePersonOkTest() throws PetshopNotExistsException
     {
