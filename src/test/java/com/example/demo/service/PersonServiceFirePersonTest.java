@@ -14,6 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.times;
 import static org.mockito.MockitoAnnotations.initMocks;
+import static org.mockito.MockitoAnnotations.openMocks;
 
 public class PersonServiceFirePersonTest {
 
@@ -28,7 +29,7 @@ public class PersonServiceFirePersonTest {
     @BeforeEach
     public void setUp()
     {
-        initMocks(this);
+        openMocks(this);
     }
 
     @Test

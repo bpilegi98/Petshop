@@ -13,6 +13,7 @@ import org.springframework.data.projection.SpelAwareProxyProjectionFactory;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
+import static org.mockito.MockitoAnnotations.openMocks;
 
 public class ProductServiceGetStockTest {
 
@@ -27,7 +28,7 @@ public class ProductServiceGetStockTest {
     @BeforeEach
     public void setUp()
     {
-        initMocks(this);
+        openMocks(this);
     }
 
 

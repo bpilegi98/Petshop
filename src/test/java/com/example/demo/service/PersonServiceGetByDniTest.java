@@ -13,6 +13,7 @@ import org.mockito.Mock;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
+import static org.mockito.MockitoAnnotations.openMocks;
 
 public class PersonServiceGetByDniTest {
 
@@ -27,7 +28,7 @@ public class PersonServiceGetByDniTest {
     @BeforeEach
     public void setUp()
     {
-        initMocks(this);
+        openMocks(this);
     }
 
 

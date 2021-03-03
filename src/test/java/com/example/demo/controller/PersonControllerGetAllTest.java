@@ -32,9 +32,8 @@ public class PersonControllerGetAllTest {
     PersonService personService;
 
     @Autowired
-    private MockMvc mockMvc;
+    MockMvc mockMvc;
 
-    @Mock
     List<Person> personList;
 
     @BeforeEach
