@@ -35,6 +35,7 @@ public class PersonControllerGetAllTest {
     MockMvc mockMvc;
 
     List<Person> personList;
+    String listJson;
 
     @BeforeEach
     public void setUp()
@@ -47,7 +48,6 @@ public class PersonControllerGetAllTest {
     @Test
     public void getAllOkTest() throws Exception {
         personList.add(new Person());
-        String listJson = "";
 
         try
         {
