@@ -1,4 +1,4 @@
-package com.example.demo.controller;
+package com.example.demo.exceptions;
 
 import com.example.demo.exceptions.PetshopAlreadyExistsException;
 import com.example.demo.exceptions.PetshopNotExistsException;
@@ -15,7 +15,7 @@ import java.util.logging.Level;
 
 @Log
 @org.springframework.web.bind.annotation.ControllerAdvice
-public class ControllerAdvice extends ResponseEntityExceptionHandler {
+public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
 
     @ExceptionHandler(PetshopAlreadyExistsException.class)
